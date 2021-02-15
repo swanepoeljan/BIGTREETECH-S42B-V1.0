@@ -37,28 +37,28 @@ int16_t kd = 250; //
 const uint8_t LPFA = 125;
 const uint8_t LPFB = 3;
 
-int32_t s = 0;            // TIM1 counts which is step counts
-int32_t s_1 = 0;          // Previous step count
-int32_t s_sum = 0;        // Step sum offset
-int32_t r = 0;            // Desired angle / setpoint
-int32_t r_1 = 0;          // Previous desired angle
-uint8_t dir = 1;          //
-int16_t y = 0;            // Output theta / corrected encoder reading
-int16_t y_1 = 0;          // Previous output theta
-int32_t yw = 0;           // Wrapped (actual) angle
-int32_t yw_1 = 0;         // Previous wrapped (actual) angle
-int16_t advance = 0;      //
-int32_t wrap_count = 0;   //
-int32_t pid_error = 0;    // PID error
-int32_t iterm = 0;        //
-int32_t dterm = 0;        //
-int16_t u = 0;            //
-int32_t stepnumber = 0;   //
-uint8_t stepangle = 0;    //
+int32_t s = 0;          // TIM1 counts which is step counts
+int32_t s_1 = 0;        // Previous step count
+int32_t s_sum = 0;      // Step sum offset
+int32_t r = 0;          // Desired angle / setpoint
+int32_t r_1 = 0;        // Previous desired angle
+uint8_t dir = 1;        //
+int16_t y = 0;          // Output theta / corrected encoder reading
+int16_t y_1 = 0;        // Previous output theta
+int32_t yw = 0;         // Wrapped (actual) angle
+int32_t yw_1 = 0;       // Previous wrapped (actual) angle
+int16_t advance = 0;    //
+int32_t wrap_count = 0; //
+int32_t pid_error = 0;  // PID error
+int32_t iterm = 0;      //
+int32_t dterm = 0;      //
+int16_t u = 0;          //
+int32_t stepnumber = 0; //
+uint8_t stepangle = 0;  //
 
-uint16_t hccount = 0;     //
-uint8_t closemode;        //
-uint8_t enmode = 0;       //
+uint16_t hccount = 0; //
+uint8_t closemode;    //
+uint8_t enmode = 0;   //
 
 uint8_t Calibration_flag = 0;            //
 volatile uint8_t Data_update_flag = 1;   //
@@ -85,7 +85,7 @@ uint8_t oledClock = 0x00;
 bool streamAngle;
 bool tuningMode; // JaSw: Indicates tuning mode, where some normal features are disabled
 
-uint8_t currentLimit = 0;                   //Current limit
+uint8_t currentLimit = 0;               //Current limit
 uint8_t Motor_Dir = 0;                  //
 volatile uint8_t Motor_ENmode_flag = 0; //
 
@@ -133,15 +133,8 @@ int main(void)
     //SetModeCheck();
 
     // Check encoder health.
-        // TODO: Add message to OLED also
-        if (CheckHealth() == false)
-          for(uint8_t m=0;m<10;m++)
-    {
-      LED_H;
-      LL_mDelay(200);
-      LED_L;
-      LL_mDelay(200);
-    }
+    if (!CheckHealth())
+      ShowEncoderError();
 
     // Apply parameters read from flash
     currentLimit = tblParams[1];
@@ -154,7 +147,7 @@ int main(void)
     kd = tblParams[13];
 
     closemode = tblParams[14];
-    if (closemode > 1)          //vc: if saved value is not initialized yet
+    if (closemode > 1) //vc: if saved value is not initialized yet
       closemode = 0;
     if (closemode == 1)
       PID_Cal_value_init();

@@ -4,7 +4,7 @@
 #include "oled.h"
 
 // Declare menu and menu items (should be in global space)
-//struct Menu menuMain;
+// struct Menu menuMain;
 struct menuItem menuItemCalibrate;
 struct menuItem menuItemCurrent;
 struct menuItem menuItemStepSize;
@@ -55,22 +55,22 @@ void Changer_StepSize(struct Menu *menu, int16_t val)
 
 // Override function for the default item value changer
 void Changer_ClosedLoopMode(struct Menu *menu, int16_t val)
-{  
+{
   if (val == 1)
   {
     closemode = 1;
-    PID_Cal_value_init();    
-  }    
+    PID_Cal_value_init();
+  }
   else
   {
     closemode = 0;
-  }  
+  }
 }
 
 void ShowStartupScreen()
 {
-    OLED_Clear();                              
-    OLED_ShowString(0,0,"   TrueStep   ");
+  OLED_Clear();
+  OLED_ShowString(0, 0, "   TrueStep   ");
 }
 
 void ShowInfoScreen()
@@ -96,17 +96,23 @@ void ShowCalibrateOKScreen()
 
 void ShowCalibrateCompleteScreen()
 {
-    OLED_Clear();
-    OLED_ShowString(0,16,"   Finished!  ");
-    OLED_ShowString(0,32,"  Please Press ");
-    OLED_ShowString(0,48,"Reset to Reboot");
+  OLED_Clear();
+  OLED_ShowString(0, 16, "   Finished!  ");
+  OLED_ShowString(0, 32, "  Please Press ");
+  OLED_ShowString(0, 48, "Reset to Reboot");
 }
 
 void ShowBootloaderScreen()
 {
-    OLED_Clear();
-    OLED_ShowString(32,25,"Running");
-    OLED_ShowString(16,45,"Bootloader");
+  OLED_Clear();
+  OLED_ShowString(32, 25, "Running");
+  OLED_ShowString(16, 45, "Bootloader");
+}
+
+void ShowEncoderError()
+{
+  OLED_Clear();
+  OLED_ShowString(0, 16, "  Encoder ERROR");
 }
 
 void ExitMenu()
@@ -132,21 +138,21 @@ void BuildMenu()
   menuItemCurrent.title = "Current";
   menuItemCurrent.type = MENU_ITEM_TYPE_VARIABLE_UINT8;
   menuItemCurrent.variable.value = &currentLimit;
-  menuItemCurrent.variable.maxValue = 300;                          // Limit max current to just below 2A
+  menuItemCurrent.variable.maxValue = 300; // Limit max current to just below 2A
   menuItemCurrent.variable.valueConverter = &Converter_Current;
 
   Menu_Item_Init(&menuItemStepSize);
   menuItemStepSize.title = "Step Size";
-  menuItemStepSize.type = MENU_ITEM_TYPE_VARIABLE_UINT8;                            
-  menuItemStepSize.variable.value = &stepangle;  
+  menuItemStepSize.type = MENU_ITEM_TYPE_VARIABLE_UINT8;
+  menuItemStepSize.variable.value = &stepangle;
   menuItemStepSize.variable.maxValue = 32;
-  menuItemStepSize.variable.minValue = 1; 
+  menuItemStepSize.variable.minValue = 1;
   menuItemStepSize.variable.valueConverter = &Converter_Stepsize;
   menuItemStepSize.variable.change =
       &Changer_StepSize; // Override the default value change function
 
   Menu_Item_Init(&menuItemEnablePin);
-  menuItemEnablePin.title = "EN Pin";                   
+  menuItemEnablePin.title = "EN Pin";
   menuItemEnablePin.type = MENU_ITEM_TYPE_VARIABLE_UINT8;
   menuItemEnablePin.variable.value = (void *)&Motor_ENmode_flag;
   menuItemEnablePin.variable.maxValue = 1;
@@ -169,8 +175,8 @@ void BuildMenu()
   Menu_Item_Init(&menuItemPID_P);
   menuItemPID_P.title = "PID P";
   menuItemPID_P.type = MENU_ITEM_TYPE_VARIABLE_UINT16;
-  menuItemPID_P.variable.value = &kp; 
-  
+  menuItemPID_P.variable.value = &kp;
+
   Menu_Item_Init(&menuItemPID_I);
   menuItemPID_I.title = "PID I";
   menuItemPID_I.type = MENU_ITEM_TYPE_VARIABLE_UINT16;
@@ -225,135 +231,112 @@ void Motor_data_dis(void)
   static uint16_t e_a = 0, e_b = 0;
 
   if (Data_update_flag == 1 /*&& Menu_Num==1*/)
+  {
+    Data_update_flag = 0;
+    /*************SIMP*****************************************************/
+    Motor_speed = wap2 - wap1; //
+    if (Motor_speed >= 0)
+      // temp[8]=' ';
+      strRPM[0] = ' ';
+    else
     {
-        Data_update_flag=0;
-/*************SIMP*****************************************************/
-        Motor_speed = wap2-wap1;//
-        if(Motor_speed>=0)
-            //temp[8]=' ';
-            strRPM[0] = ' ';
-        else
-        {
-            //temp[8]='-';
-            strRPM[0] = '-';
-            Motor_speed = ~Motor_speed ;
-            Motor_speed+=1;
-        }
-        Motor_speed=Motor_speed*60;//
-       /* temp[0]=Motor_speed/1000;
-        temp[1]=Motor_speed%1000/100;
-        temp[2]=Motor_speed%100/10;
-        temp[3]=Motor_speed%10;
-        */
-        strRPM[1] = '0' + Motor_speed/1000;
-        strRPM[2] = '0' + Motor_speed%1000/100;
-        strRPM[3] = '0' + Motor_speed%100/10;
-        strRPM[4] = '0' + Motor_speed%10;
-/*************ERR*************************************************/
+      // temp[8]='-';
+      strRPM[0] = '-';
+      Motor_speed = ~Motor_speed;
+      Motor_speed += 1;
+    }
+    Motor_speed = Motor_speed * 60; //
+                                    /* temp[0]=Motor_speed/1000;
+                                     temp[1]=Motor_speed%1000/100;
+                                     temp[2]=Motor_speed%100/10;
+                                     temp[3]=Motor_speed%10;
+                                     */
+    strRPM[1] = '0' + Motor_speed / 1000;
+    strRPM[2] = '0' + Motor_speed % 1000 / 100;
+    strRPM[3] = '0' + Motor_speed % 100 / 10;
+    strRPM[4] = '0' + Motor_speed % 10;
+    /*************ERR*************************************************/
     if (pid_error >= 0)
-        {
-            //temp[4]=' ';
-            strERR[0] = ' ';
+    {
+      // temp[4]=' ';
+      strERR[0] = ' ';
       e_temp = pid_error;
-        }
-        else
-        {
-            //temp[4]='-';
-            strERR[0] = '-';
+    }
+    else
+    {
+      // temp[4]='-';
+      strERR[0] = '-';
       e_temp = -pid_error;
-        }
+    }
     // e_temp=e_temp*0.021972*100;
     e_temp = e_temp * 2.1972f; // JaSw: Changed to float (increases performance
                                // and flash memory use)
     e_a = e_temp / 100;
     e_b = e_temp % 100;
     // e_b =(e_temp -e_a) *100;
-/*   
-        temp[5]=e_a/100;
-        temp[6]=e_a%100/10;
-        temp[7]=e_a%10;
-//        temp[8]='.';
-        temp[9]=e_b/10;
-        temp[10]=e_b%10;
-*/
-        strERR[1] = '0' + e_a/100;
-        strERR[2] = '0' + e_a%100/10;
-        strERR[3] = '0' + e_a%10;
-        strERR[4] = '.';
-        strERR[5] = '0' + e_b/10;
-        strERR[6] = '0' + e_b%10;
+    /*
+            temp[5]=e_a/100;
+            temp[6]=e_a%100/10;
+            temp[7]=e_a%10;
+    //        temp[8]='.';
+            temp[9]=e_b/10;
+            temp[10]=e_b%10;
+    */
+    strERR[1] = '0' + e_a / 100;
+    strERR[2] = '0' + e_a % 100 / 10;
+    strERR[3] = '0' + e_a % 10;
+    strERR[4] = '.';
+    strERR[5] = '0' + e_b / 10;
+    strERR[6] = '0' + e_b % 10;
 
-/*************Deg***************************************************/
-        if(yw>=0)
-        {
-            strDEG[0] = ' ';
-            e_temp= yw;
-        }
-        else
-        {
-            strDEG[0] = '-';
-            e_temp=-yw;
-        }
-        e_temp=e_temp*360*10/16384; //
-        if(e_temp>99999)
-        {
-            
-            strDEG[1] = 29;//M
-            strDEG[2] = 49;//a
-            strDEG[3] = 72;//x
-            strDEG[4] = ' ';
-            strDEG[5] = ' ';
-            strDEG[6] = ' ';
-        }
-        else
-        {
+    /*************Deg***************************************************/
+    if (yw >= 0)
+    {
+      strDEG[0] = ' ';
+      e_temp = yw;
+    }
+    else
+    {
+      strDEG[0] = '-';
+      e_temp = -yw;
+    }
+    e_temp = e_temp * 360 * 10 / 16384; //
+    if (e_temp > 99999)
+    {
+
+      strDEG[1] = 29; // M
+      strDEG[2] = 49; // a
+      strDEG[3] = 72; // x
+      strDEG[4] = ' ';
+      strDEG[5] = ' ';
+      strDEG[6] = ' ';
+    }
+    else
+    {
       e_a = e_temp / 10; //
       if (e_a > 9999)
       {
         strDEG[1] = 29; // M
         strDEG[2] = 49; // a
         strDEG[3] = 72; // x
-                strDEG[4] = ' ';
-                strDEG[5] = ' ';
-                strDEG[6] = ' ';
-            }
-            else
-            {
-                e_b =e_temp%10;                    //
-                strDEG[1] = '0' + e_a/1000;
-                strDEG[2] = '0' + e_a%1000/100;
-                strDEG[3] = '0' + e_a%100/10;
-                strDEG[4] = '0' + e_a%10;
-                strDEG[5] = '.';
-                strDEG[6] = '0' + e_b%10;
-            }
-        }
-    
-        OLED_ShowString(48, 2, strRPM);
-        OLED_ShowString(48, 22, strERR);
-       OLED_ShowString(48, 42, strDEG);
+        strDEG[4] = ' ';
+        strDEG[5] = ' ';
+        strDEG[6] = ' ';
+      }
+      else
+      {
+        e_b = e_temp % 10; //
+        strDEG[1] = '0' + e_a / 1000;
+        strDEG[2] = '0' + e_a % 1000 / 100;
+        strDEG[3] = '0' + e_a % 100 / 10;
+        strDEG[4] = '0' + e_a % 10;
+        strDEG[5] = '.';
+        strDEG[6] = '0' + e_b % 10;
+      }
     }
+    
+    OLED_ShowString(48, 2, strRPM);
+    OLED_ShowString(48, 22, strERR);
+    OLED_ShowString(48, 42, strDEG);
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

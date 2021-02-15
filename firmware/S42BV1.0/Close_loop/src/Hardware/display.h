@@ -11,17 +11,19 @@ void BuildMenu(void);
 
 void Motor_data_dis(void);
 
-void ShowStartupScreen();
+void ShowStartupScreen(void);
 
-void ShowInfoScreen();
+void ShowInfoScreen(void);
 
-void ShowCalibrateScreen();
+void ShowCalibrateScreen(void);
 
-void ShowCalibrateOKScreen();
+void ShowCalibrateOKScreen(void);
 
-void ShowCalibrateCompleteScreen();
+void ShowCalibrateCompleteScreen(void);
 
-void ShowBootloaderScreen();
+void ShowBootloaderScreen(void);
+
+void ShowEncoderError(void);
 
 #endif
 
