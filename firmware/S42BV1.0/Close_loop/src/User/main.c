@@ -133,9 +133,10 @@ int main(void)
     //SetModeCheck();
 
     // Check encoder health.
-        // TODO: Add message to OLED also
-        if (CheckHealth() == false)
-          for(uint8_t m=0;m<10;m++)
+    if (!CheckHealth())
+      ShowEncoderError();
+    
+    for (uint8_t m = 0; m < 10; m++)
     {
       LED_H;
       LL_mDelay(200);
