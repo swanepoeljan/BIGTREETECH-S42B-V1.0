@@ -1,7 +1,7 @@
-#include "main.h"
 #include "display.h"
-#include "oled.h"
+#include "main.h"
 #include "menu.h"
+#include "oled.h"
 
 // Declare menu and menu items (should be in global space)
 //struct Menu menuMain;
@@ -18,14 +18,12 @@ struct menuItem menuItemOLEDFreq;
 struct menuItem menuItemSave;
 struct menuItem menuItemExit;
 
-
 // Convert to mA by multiplying by 6.5
 uint16_t Converter_Current(uint16_t valueIn)
 {
   uint16_t valueOut = (valueIn * 13) / 2;
   return valueOut;
 }
-
 
 // Convert to microstep ratio
 uint16_t Converter_Stepsize(uint16_t valueIn)
@@ -34,7 +32,6 @@ uint16_t Converter_Stepsize(uint16_t valueIn)
   return valueOut;
 }
 
-
 // Override function for the default item value changer
 void Changer_StepSize(struct Menu *menu, int16_t val)
 {
@@ -42,18 +39,19 @@ void Changer_StepSize(struct Menu *menu, int16_t val)
 
   if (val > 0)
   {
-    newVal = *(uint8_t*)menu->items[menu->selectedItemIndex]->variable.value >> 1;
+    newVal =
+        *(uint8_t *)menu->items[menu->selectedItemIndex]->variable.value >> 1;
     if (newVal >= menu->items[menu->selectedItemIndex]->variable.minValue)
-      *(uint8_t*)menu->items[menu->selectedItemIndex]->variable.value = newVal;
+      *(uint8_t *)menu->items[menu->selectedItemIndex]->variable.value = newVal;
   }
   else
   {
-    newVal = *(uint8_t*)menu->items[menu->selectedItemIndex]->variable.value << 1;
+    newVal = *(uint8_t *)menu->items[menu->selectedItemIndex]->variable.value
+             << 1;
     if (newVal <= menu->items[menu->selectedItemIndex]->variable.maxValue)
-      *(uint8_t*)menu->items[menu->selectedItemIndex]->variable.value = newVal;
-  } 
+      *(uint8_t *)menu->items[menu->selectedItemIndex]->variable.value = newVal;
+  }
 }
-
 
 // Override function for the default item value changer
 void Changer_ClosedLoopMode(struct Menu *menu, int16_t val)
@@ -69,37 +67,32 @@ void Changer_ClosedLoopMode(struct Menu *menu, int16_t val)
   }  
 }
 
-
 void ShowStartupScreen()
 {
     OLED_Clear();                              
     OLED_ShowString(0,0,"   TrueStep   ");
 }
 
-
 void ShowInfoScreen()
 {
-  OLED_ShowString(0,2,"Simp:  0000 RPM");
-  OLED_ShowString(0,22," Err:  000.00 ");
-  OLED_ShowString(0,42," Deg:  0000.0");
+  OLED_ShowString(0, 2, "Simp:  0000 RPM");
+  OLED_ShowString(0, 22, " Err:  000.00 ");
+  OLED_ShowString(0, 42, " Deg:  0000.0");
 }
-
 
 void ShowCalibrateScreen()
 {
-    OLED_Clear();  
-    OLED_ShowString(48,16,"NOT");
-    OLED_ShowString(16,32,"Calibrated");
-    OLED_ShowString(0,48,"Please Calibrate");
+  OLED_Clear();
+  OLED_ShowString(48, 16, "NOT");
+  OLED_ShowString(16, 32, "Calibrated");
+  OLED_ShowString(0, 48, "Please Calibrate");
 }
-
 
 void ShowCalibrateOKScreen()
 {
-    OLED_ShowString(16,25,"Calibration");
-    OLED_ShowString(48,45,"OK!");
+  OLED_ShowString(16, 25, "Calibration");
+  OLED_ShowString(48, 45, "OK!");
 }
-
 
 void ShowCalibrateCompleteScreen()
 {
@@ -108,7 +101,6 @@ void ShowCalibrateCompleteScreen()
     OLED_ShowString(0,32,"  Please Press ");
     OLED_ShowString(0,48,"Reset to Reboot");
 }
-
 
 void ShowBootloaderScreen()
 {
@@ -123,7 +115,6 @@ void ExitMenu()
   OLED_Clear();
   ShowInfoScreen();
 }
-
 
 void BuildMenu()
 {
@@ -140,7 +131,7 @@ void BuildMenu()
   Menu_Item_Init(&menuItemCurrent);
   menuItemCurrent.title = "Current";
   menuItemCurrent.type = MENU_ITEM_TYPE_VARIABLE_UINT8;
-  menuItemCurrent.variable.value = &Currents;
+  menuItemCurrent.variable.value = &currentLimit;
   menuItemCurrent.variable.maxValue = 300;                          // Limit max current to just below 2A
   menuItemCurrent.variable.valueConverter = &Converter_Current;
 
@@ -151,12 +142,13 @@ void BuildMenu()
   menuItemStepSize.variable.maxValue = 32;
   menuItemStepSize.variable.minValue = 1; 
   menuItemStepSize.variable.valueConverter = &Converter_Stepsize;
-  menuItemStepSize.variable.change = &Changer_StepSize;             // Override the default value change function        
+  menuItemStepSize.variable.change =
+      &Changer_StepSize; // Override the default value change function
 
   Menu_Item_Init(&menuItemEnablePin);
   menuItemEnablePin.title = "EN Pin";                   
   menuItemEnablePin.type = MENU_ITEM_TYPE_VARIABLE_UINT8;
-  menuItemEnablePin.variable.value = &Motor_ENmode_flag;  
+  menuItemEnablePin.variable.value = (void *)&Motor_ENmode_flag;
   menuItemEnablePin.variable.maxValue = 1;
 
   Menu_Item_Init(&menuItemDirectionPin);
@@ -171,7 +163,8 @@ void BuildMenu()
   menuItemClosedLoopMode.variable.value = &closemode;
   menuItemClosedLoopMode.variable.maxValue = 1;
   menuItemClosedLoopMode.variable.minValue = 0;
-  menuItemClosedLoopMode.variable.change = &Changer_ClosedLoopMode;   // Override the default value change function
+  menuItemClosedLoopMode.variable.change =
+      &Changer_ClosedLoopMode; // Override the default value change function
 
   Menu_Item_Init(&menuItemPID_P);
   menuItemPID_P.title = "PID P";
@@ -217,23 +210,21 @@ void BuildMenu()
   Menu_Add_Item(&menuMain, &menuItemOLEDFreq);
   Menu_Add_Item(&menuMain, &menuItemSave);
   Menu_Add_Item(&menuMain, &menuItemExit);
-
 }
-
 
 //
 void Motor_data_dis(void)
 {
-    //uint8_t temp[17]={0};
-    uint8_t strRPM[6] = {0};
-    uint8_t strERR[8] = {0};
-    uint8_t strDEG[8] = {0};
+  // uint8_t temp[17]={0};
+  char strRPM[6] = {0};
+  char strERR[8] = {0};
+  char strDEG[8] = {0};
 
-    //int32_t deg_temp=0;
-    uint32_t e_temp=0;
-    static uint16_t e_a=0,e_b=0;
-    
-    if(Data_update_flag ==1 /*&& Menu_Num==1*/)
+  // int32_t deg_temp=0;
+  uint32_t e_temp = 0;
+  static uint16_t e_a = 0, e_b = 0;
+
+  if (Data_update_flag == 1 /*&& Menu_Num==1*/)
     {
         Data_update_flag=0;
 /*************SIMP*****************************************************/
@@ -259,23 +250,24 @@ void Motor_data_dis(void)
         strRPM[3] = '0' + Motor_speed%100/10;
         strRPM[4] = '0' + Motor_speed%10;
 /*************ERR*************************************************/
-        if(pid_e>=0)
+    if (pid_error >= 0)
         {
             //temp[4]=' ';
             strERR[0] = ' ';
-            e_temp=pid_e;
+      e_temp = pid_error;
         }
         else
         {
             //temp[4]='-';
             strERR[0] = '-';
-            e_temp=-pid_e;
+      e_temp = -pid_error;
         }
-        //e_temp=e_temp*0.021972*100;
-        e_temp=e_temp*2.1972f;          // JaSw: Changed to float (increases performance and flash memory use)  
-        e_a =e_temp/100;                   
-        e_b =e_temp%100;                    
-        //e_b =(e_temp -e_a) *100;        
+    // e_temp=e_temp*0.021972*100;
+    e_temp = e_temp * 2.1972f; // JaSw: Changed to float (increases performance
+                               // and flash memory use)
+    e_a = e_temp / 100;
+    e_b = e_temp % 100;
+    // e_b =(e_temp -e_a) *100;
 /*   
         temp[5]=e_a/100;
         temp[6]=e_a%100/10;
@@ -312,15 +304,15 @@ void Motor_data_dis(void)
             strDEG[4] = ' ';
             strDEG[5] = ' ';
             strDEG[6] = ' ';
-            
         }
         else
         {
-            e_a =e_temp/10;                    //
-            if(e_a>9999){
-                strDEG[1] = 29;//M
-                strDEG[2] = 49;//a
-                strDEG[3] = 72;//x
+      e_a = e_temp / 10; //
+      if (e_a > 9999)
+      {
+        strDEG[1] = 29; // M
+        strDEG[2] = 49; // a
+        strDEG[3] = 72; // x
                 strDEG[4] = ' ';
                 strDEG[5] = ' ';
                 strDEG[6] = ' ';
@@ -336,33 +328,9 @@ void Motor_data_dis(void)
                 strDEG[6] = '0' + e_b%10;
             }
         }
-/**********显示*****************************************************/ 
-    /*    OLED_ShowChar( 48, 2, temp[8], 16, 1);
-        OLED_ShowChar( 56, 2, '0'+temp[0], 16, 1);
-        OLED_ShowChar( 64, 2, '0'+temp[1], 16, 1);
-        OLED_ShowChar( 72, 2, '0'+temp[2], 16, 1);
-        OLED_ShowChar( 80, 2, '0'+temp[3], 16, 1);
-        */
+    
         OLED_ShowString(48, 2, strRPM);
-    /*    
-        OLED_ShowChar( 48, 22, temp[4], 16, 1);
-        OLED_ShowChar( 56, 22, '0'+temp[5], 16, 1);
-        OLED_ShowChar( 64, 22, '0'+temp[6], 16, 1);
-        OLED_ShowChar( 72, 22, '0'+temp[7], 16, 1);
-//        OLED_ShowChar( 80, 22, temp[8], 16, 1);
-        OLED_ShowChar( 88, 22, '0'+temp[9], 16, 1);
-        OLED_ShowChar( 96, 22, '0'+temp[10], 16, 1);
-      */
         OLED_ShowString(48, 22, strERR);
-/*
-        OLED_ShowChar( 48, 42, temp[12], 16, 1);
-        OLED_ShowChar( 56, 42, '0'+temp[13], 16, 1);
-        OLED_ShowChar( 64, 42, '0'+temp[14], 16, 1);
-        OLED_ShowChar( 72, 42, '0'+temp[15], 16, 1);
-        OLED_ShowChar( 80, 42, '0'+temp[16], 16, 1);
-        OLED_ShowChar( 88, 42, '0'+temp[17], 16, 1);
-        OLED_ShowChar( 96, 42, '0'+temp[11], 16, 1);
-        */
        OLED_ShowString(48, 42, strDEG);
     }
 }

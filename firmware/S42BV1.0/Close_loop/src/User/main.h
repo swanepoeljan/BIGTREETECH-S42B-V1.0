@@ -1,7 +1,6 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-
 #include "stm32f0xx_ll_iwdg.h"
 #include "stm32f0xx_ll_crs.h"
 #include "stm32f0xx_ll_rcc.h"
@@ -19,8 +18,6 @@
 #include "math.h"
 #include "stdio.h"
 #include "stdbool.h"
-
-
 
 //#define MISO_Pin LL_GPIO_PIN_6
 //#define MISO_GPIO_Port GPIOA
@@ -43,7 +40,7 @@
 #define ENIN_Pin LL_GPIO_PIN_2
 #define ENIN_GPIO_Port GPIOB
 #define ENIN_EXTI_IRQn EXTI2_3_IRQn
-#define LED_Pin LL_GPIO_PIN_11  
+#define LED_Pin LL_GPIO_PIN_11
 #define LED_GPIO_Port GPIOB
 #define PWM1_Pin LL_GPIO_PIN_4
 #define PWM1_GPIO_Port GPIOB
@@ -60,9 +57,7 @@
 //#define NSS_Pin LL_GPIO_PIN_4
 //#define NSS_GPIO_Port GPIOA
 
-
-
-//------------------------------			   
+//------------------------------
 // #define OLED_CS_Pin             LL_GPIO_PIN_12		//
 // #define OLED_CS_GPIO_Port       GPIOB
 // #define OLED_RST_Pin            LL_GPIO_PIN_13 		//
@@ -75,43 +70,40 @@
 // #define OLED_SDIN_Pin           LL_GPIO_PIN_14	    //
 // #define OLED_SDIN_GPIO_Port     GPIOB
 
-
 #ifndef NVIC_PRIORITYGROUP_0
-#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
-                                                                 4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority,
-                                                                 3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority,
-                                                                 2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority,
-                                                                 1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
-                                                                 0 bit  for subpriority */
+// !< 0 bit  for pre-emption priority, 4 bits for subpriority
+#define NVIC_PRIORITYGROUP_0 ((uint32_t)0x00000007)
+// !< 1 bit  for pre-emption priority, 3 bits for subpriority
+#define NVIC_PRIORITYGROUP_1 ((uint32_t)0x00000006)
+// !< 2 bits for pre-emption priority, 2 bits for subpriority
+#define NVIC_PRIORITYGROUP_2 ((uint32_t)0x00000005)
+// !< 3 bits for pre-emption priority, 1 bit  for subpriority
+#define NVIC_PRIORITYGROUP_3 ((uint32_t)0x00000004)
+// !< 4 bits for pre-emption priority, 0 bit  for subpriority
+#define NVIC_PRIORITYGROUP_4 ((uint32_t)0x00000003)
 #endif
 
+#define CAL LL_GPIO_IsInputPinSet(CAL_GPIO_Port, CAL_Pin)
+#define CLOSE LL_GPIO_IsInputPinSet(CLOSE_GPIO_Port, CLOSE_Pin)
+#define SET1 LL_GPIO_IsInputPinSet(SET1_GPIO_Port, SET1_Pin)
+#define SET2 LL_GPIO_IsInputPinSet(SET2_GPIO_Port, SET2_Pin)
+#define ENIN LL_GPIO_IsInputPinSet(ENIN_GPIO_Port, ENIN_Pin)
+#define DIRIN LL_GPIO_IsInputPinSet(DIRIN_GPIO_Port, DIRIN_Pin)
 
+#define LED_H LL_GPIO_SetOutputPin(LED_GPIO_Port, LED_Pin)
+#define LED_L LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin)
+#define LED_F LL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin)
+#define IN1_HIGH LL_GPIO_SetOutputPin(IN1_GPIO_Port, IN1_Pin)
+#define IN1_LOW LL_GPIO_ResetOutputPin(IN1_GPIO_Port, IN1_Pin)
+#define IN2_HIGH LL_GPIO_SetOutputPin(IN2_GPIO_Port, IN2_Pin)
+#define IN2_LOW LL_GPIO_ResetOutputPin(IN2_GPIO_Port, IN2_Pin)
+#define IN3_HIGH LL_GPIO_SetOutputPin(IN3_GPIO_Port, IN3_Pin)
+#define IN3_LOW LL_GPIO_ResetOutputPin(IN3_GPIO_Port, IN3_Pin)
+#define IN4_HIGH LL_GPIO_SetOutputPin(IN4_GPIO_Port, IN4_Pin)
+#define IN4_LOW LL_GPIO_ResetOutputPin(IN4_GPIO_Port, IN4_Pin)
 
-#define CAL     LL_GPIO_IsInputPinSet(CAL_GPIO_Port,  CAL_Pin) 
-#define CLOSE   LL_GPIO_IsInputPinSet(CLOSE_GPIO_Port, CLOSE_Pin) 
-#define SET1    LL_GPIO_IsInputPinSet(SET1_GPIO_Port, SET1_Pin) 
-#define SET2    LL_GPIO_IsInputPinSet(SET2_GPIO_Port, SET2_Pin)
-#define ENIN    LL_GPIO_IsInputPinSet(ENIN_GPIO_Port, ENIN_Pin)
-#define DIRIN   LL_GPIO_IsInputPinSet(DIRIN_GPIO_Port,DIRIN_Pin)
-
-#define LED_H     LL_GPIO_SetOutputPin(LED_GPIO_Port, LED_Pin)  
-#define LED_L     LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin) 
-#define LED_F     LL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin)
-#define IN1_HIGH  LL_GPIO_SetOutputPin(IN1_GPIO_Port, IN1_Pin) 
-#define IN1_LOW   LL_GPIO_ResetOutputPin(IN1_GPIO_Port, IN1_Pin)
-#define IN2_HIGH  LL_GPIO_SetOutputPin(IN2_GPIO_Port, IN2_Pin) 
-#define IN2_LOW   LL_GPIO_ResetOutputPin(IN2_GPIO_Port, IN2_Pin)
-#define IN3_HIGH  LL_GPIO_SetOutputPin(IN3_GPIO_Port, IN3_Pin) 
-#define IN3_LOW   LL_GPIO_ResetOutputPin(IN3_GPIO_Port, IN3_Pin)
-#define IN4_HIGH  LL_GPIO_SetOutputPin(IN4_GPIO_Port, IN4_Pin) 
-#define IN4_LOW   LL_GPIO_ResetOutputPin(IN4_GPIO_Port, IN4_Pin)
-
-//#define NSS_H   LL_GPIO_SetOutputPin(NSS_GPIO_Port, NSS_Pin)  
-//#define NSS_L   LL_GPIO_ResetOutputPin(NSS_GPIO_Port, NSS_Pin) 
+//#define NSS_H   LL_GPIO_SetOutputPin(NSS_GPIO_Port, NSS_Pin)
+//#define NSS_L   LL_GPIO_ResetOutputPin(NSS_GPIO_Port, NSS_Pin)
 
 //#define SPI_TX_OD  LL_GPIO_SetPinOutputType(MOSI_GPIO_Port, MOSI_Pin, LL_GPIO_OUTPUT_OPENDRAIN)
 //#define SPI_TX_PP  LL_GPIO_SetPinOutputType(MOSI_GPIO_Port, MOSI_Pin, LL_GPIO_OUTPUT_PUSHPULL)
@@ -132,59 +124,55 @@
 // #define OLED_SDIN_H     LL_GPIO_SetOutputPin(OLED_SDIN_GPIO_Port,OLED_SDIN_Pin)	    //
 // #define OLED_SDIN_L     LL_GPIO_ResetOutputPin(OLED_SDIN_GPIO_Port,OLED_SDIN_Pin)		//
 
-
-
 /* Functionality mode */
 //#define REFERESH_ANGLE		0
 
-#define UMAXCL   62         //
-#define UMAXOP   160        // Open loop maximum current, this translate to (3.3V / 256) * 160 = 2V on the Vref pin
-#define UMAXSUM  25600      //
+#define UMAXCL 62     //
+#define UMAXOP 160    // Open loop maximum current, this translate to (3.3V / 256) * 160 = 2V on the Vref pin
+#define UMAXSUM 25600 //
 
-
-extern int16_t kp;     
+extern int16_t kp;
 extern int16_t ki;
 extern int16_t kd;
 
-extern const uint8_t LPFA; 
+extern const uint8_t LPFA;
 extern const uint8_t LPFB;
-
 
 extern int32_t s;
 extern int32_t s_1;
 extern int32_t s_sum;
-extern int32_t r;   
-extern int32_t r_1;   
-extern uint8_t dir; 
-extern int16_t y;   
+extern int32_t r;
+extern int32_t r_1;
+extern uint8_t dir;
+extern int16_t y;                   // angle from sensor
 extern int16_t y_1;
-extern int32_t yw;  
+extern int32_t yw;
 extern int32_t yw_1;
 extern int16_t advance;
-extern int32_t wrap_count; 
-extern int32_t pid_e;  
+extern int32_t wrap_count;
+extern int32_t pid_error;
 extern int32_t iterm;
 extern int32_t dterm;
-extern int16_t u;     
-extern int32_t stepnumber;              // Used in OneStep() function
+extern int16_t u;
+extern int32_t stepnumber; // Used in OneStep() function
 extern uint8_t stepangle;
 
-extern uint8_t menuActive;           // JaSw: In-menu = 1 else 0
-extern volatile uint32_t tickCount;     // JaSw: Counts ticks
-extern volatile uint32_t tim6Counter;   // JaSw: Counts timer 6 interrupts
+extern uint8_t menuActive;            // JaSw: In-menu = 1 else 0
+extern volatile uint32_t tickCount;   // JaSw: Counts ticks
+extern volatile uint32_t tim6Counter; // JaSw: Counts timer 6 interrupts
 extern bool tuningMode;
-extern uint8_t oledClock;               // JaSw: Holds OLED Display Clock Divide Ratio/Oscillator Frequency
+extern uint8_t oledClock; // JaSw: Holds OLED Display Clock Divide Ratio/Oscillator Frequency
 
 extern uint16_t hccount;
 extern uint8_t closemode;
 extern uint8_t enmode;
 
-extern uint8_t Currents;          //800ma
+extern uint8_t currentLimit; //800ma
 //extern uint8_t Microstep;            //4->4096
-extern uint8_t Motor_Dir;                  //
+extern uint8_t Motor_Dir; //
 
 //extern volatile uint8_t Menu_update_flag;      //
-extern volatile uint8_t Data_update_flag;  
+extern volatile uint8_t Data_update_flag;
 extern volatile uint16_t Data_update_Count;
 //extern uint8_t Menu_Num ;             //
 //extern uint8_t Menu_Num_item;         //
@@ -193,13 +181,13 @@ extern volatile uint16_t Data_update_Count;
 //extern uint8_t CalibrateEncoder_finish_flag; //
 //extern uint8_t Second_Calibrate_flag; //
 // extern uint8_t Second_Menu;           //
-// extern uint8_t Menu_Num2_item;        //  
+// extern uint8_t Menu_Num2_item;        //
 // extern uint8_t Menu_Num3_item;        //
 // extern uint8_t Menu_Num4_item;        //
-// extern uint8_t Menu_Num5_item;        // 
-// extern uint8_t Menu_Num6_item;        // 
-extern uint8_t Calibration_flag;      //
-extern int16_t Motor_speed ;
+// extern uint8_t Menu_Num5_item;        //
+// extern uint8_t Menu_Num6_item;        //
+extern uint8_t Calibration_flag; //
+extern int16_t Motor_speed;
 extern int16_t wap1;
 extern int16_t wap2;
 extern int16_t Motor_speed_count;
@@ -207,14 +195,14 @@ extern uint8_t start_measu_V_flag;
 extern uint8_t measure_once_flag;
 
 //extern volatile uint8_t flash_store_flag;
-extern uint16_t table1[15];                    //
+extern uint16_t tblParams[15]; // vc: Parameters
 
 //extern uint8_t Rx1_buff[8];
 //extern uint8_t Receive_Count;
-//extern uint8_t Rx1_temp_num;                       
+//extern uint8_t Rx1_temp_num;
 //extern uint8_t Receive_finish_flag;          //
 //extern volatile uint8_t  Communications_Process_flag;     //
-//extern volatile uint8_t  Uart_CRC_flag;                   //  
+//extern volatile uint8_t  Uart_CRC_flag;                   //
 //extern volatile uint8_t  frame_Error_flag;                //
 //extern volatile uint8_t  Urat_CRC_Correct_flag;           //
 //extern int16_t value_Temp;
@@ -222,8 +210,8 @@ extern uint16_t table1[15];                    //
 //extern uint8_t Microstep_Set;            //4->4096
 
 //extern uint8_t Dir_Enable;           //
-extern uint8_t Motor_Dir;                  //
-extern uint8_t Motor_Enable;               //
+extern uint8_t Motor_Dir;    //
+extern uint8_t Motor_Enable; //
 //extern uint8_t Motor_mode;              //
 extern volatile uint8_t Motor_ENmode_flag; //
 //extern volatile uint8_t enter1_once_flag ;    //
@@ -233,22 +221,57 @@ extern volatile uint8_t Motor_ENmode_flag; //
 //extern volatile uint8_t close_loop1_flag ;      //
 //extern volatile uint8_t close_loop2_flag ;
 
+static void LL_Init(void);
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_SPI1_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM6_Init(void);
+static void MX_IWDG_Init(void);
+
+void ReadDIPSwitches();
+
+int16_t Mod(int32_t xMod, int16_t mMod);
+void OneStep(void);
+void FineStep(uint16_t stepSize_mdeg, uint16_t current_mA);
+uint16_t ReadValue(uint16_t RegValue);
+void WriteValue(uint16_t RegAdd, uint16_t RegValue);
+uint16_t ReadState(void);
+uint16_t ReadAngle(void);
+void restart_init(void);
+void OledMenu(void);
+// Perform software motor step
+void SoftStep(uint8_t direction);
+// Handle software move operation
+void SoftMoveStep(void);
+// Parse bytes received from the UART
+void ParseBytes(uint8_t data);
+// Stops program execution and loads the bootloader
+void InvokeBootloader(void);
+// Proceed to calibrate encoder
 void CalibrateEncoder(void);
+// Init pid. Needs at Closed mode enable.
+void PID_Cal_value_init(void);
+// Save current parameters to flash
 void StoreCurrentParameters();
+// Change the Display Clock Divide Ratio/Oscillator Frequency
+// Experimental feature
 void ChangeOLEDClock();
-extern void Output(int32_t theta,uint8_t effort);
+// Energize coils. The electrical angle is given by theta and the current limit by effort.
+extern void Output(int32_t theta, uint8_t effort);
 extern uint16_t ReadValue(uint16_t RegValue);
 extern uint16_t ReadAngle(void);
 
-
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{
 #endif
-void _Error_Handler(char *, int);
+    void _Error_Handler(char *, int);
 
 #define Error_Handler() _Error_Handler(__FILE__, __LINE__)
 #ifdef __cplusplus
 }
 #endif
 
-#endif 
+#endif

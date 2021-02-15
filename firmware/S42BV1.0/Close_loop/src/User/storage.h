@@ -28,7 +28,7 @@
 
 #define STM32_FLASH_SIZE 64
 #define STM32_FLASH_BASE        0x8000000           // SOC Flash Base Address 
-#define Data_Store_Address      0x8007C00           // Flash data storage address (last page of first 32kB, make sure program size stays below it!)  
+#define DATA_STORE_ADDR         0x8007C00           // Flash data storage address (last page of first 32kB, make sure program size stays below it!)  
 
 #if STM32_FLASH_SIZE < 256
     #define STM_SECTOR_SIZE 1024

@@ -126,7 +126,7 @@ void Menu_Show(struct Menu *menu)
                     val = menu->items[itemIndex]->variable.valueConverter(val);
                 
                 UInt16ToStr(val);
-                draw(92, (i * 16), numBuf);
+                draw(92, (i * 16), (char *)numBuf);
             }
             if ((menu->items[itemIndex]->type == MENU_ITEM_TYPE_VARIABLE_UINT8) ||
                 (menu->items[itemIndex]->type == MENU_ITEM_TYPE_ACTION_VAR_UINT8))
@@ -138,7 +138,7 @@ void Menu_Show(struct Menu *menu)
                     val = menu->items[itemIndex]->variable.valueConverter(val);
                 
                 UInt16ToStr(val);
-                draw(92, (i * 16), numBuf);
+                draw(92, (i * 16), (char *)numBuf);
             }
         }
     }
