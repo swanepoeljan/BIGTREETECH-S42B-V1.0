@@ -10,6 +10,7 @@
 #define BUFFER_TX_SIZE      64                      // Transmit buffer size
 #define BUFFER_RX_SIZE      64                      // Receive buffer size
 
+#define USART_BAUD_RATE     115200                  //Serial Baud rate
 
 volatile uint8_t rxBuffer[BUFFER_RX_SIZE];           // Software RX buffer
 volatile uint8_t rxbIndexIn;                         // Index in rxBuffer where the next byte will be stored
@@ -98,7 +99,7 @@ void MX_USART1_UART_Init(void)
   GPIO_InitStruct.Alternate = LL_GPIO_AF_1;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  USART_InitStruct.BaudRate = 38400;
+  USART_InitStruct.BaudRate = USART_BAUD_RATE;
   USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
   USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
   USART_InitStruct.Parity = LL_USART_PARITY_NONE;

@@ -47,7 +47,7 @@ enum SERIAL_MSG_COMMAND
     SERIAL_MSG_COMMAND_MODE_DISABLE     = 11,           // Software version of EN pin deactivated
     SERIAL_MSG_COMMAND_MODE_CLOSELOOP   = 12,
     SERIAL_MSG_COMMAND_MODE_OPENLOOP    = 13,
-    SERIAL_MSG_COMMAND_STREAM_ANGLE     = 20,           // Starts/stop streaming angle values via UART
+    SERIAL_MSG_COMMAND_STREAM_ANGLE     = 20,           // Starts/stop streaming angle values via UART (tuning mode)
     SERIAL_MSG_COMMAND_JUMP_BOOTLOADER  = 30,           // Jump to bootloader in system memory
 };
 
@@ -144,7 +144,7 @@ struct Serial_Msg_Status
 #define SERIAL_MSG_ANGLE            21
 struct Serial_Msg_Angle
 {
-    float angle;
+    float angle;    
 }__attribute__((packed));
 
 

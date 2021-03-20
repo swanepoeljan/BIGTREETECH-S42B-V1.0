@@ -8,6 +8,11 @@
         "cmath": "c",
         "limits": "c",
         "*.tcc": "c",
-        "typeinfo": "c"
-    }
+        "typeinfo": "c",
+        "storage.h": "c",
+        "flash.h": "c",
+        "main.h": "c"
+    },
+    
+    "cortex-debug.openocdPath": "/usr/bin/openocd",
 }
