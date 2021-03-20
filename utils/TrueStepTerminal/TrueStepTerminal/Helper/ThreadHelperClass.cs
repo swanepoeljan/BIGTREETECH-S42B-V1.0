@@ -223,14 +223,18 @@ namespace TrueStepTerminal.Helper
 			handler = new DataReceivedEventHandler(
 				(sender, e) =>
 				{
-					if (e.Data == null)
+					lock (sender)
 					{
-						removeHandler(handler);
-						taskCompletionSource.TrySetResult(null);
-					}
-					else
-					{
-						textWriter.WriteLine(e.Data);
+						if (e.Data == null)
+						{
+							removeHandler(handler);
+							taskCompletionSource.TrySetResult(null);
+						}
+						else
+						{
+							textWriter.WriteLine(e.Data);
+							textWriter.Flush();
+						}
 					}
 				});
 

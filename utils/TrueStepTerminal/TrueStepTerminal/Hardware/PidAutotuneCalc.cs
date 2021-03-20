@@ -52,9 +52,23 @@ namespace TrueStepTerminal
 			return span;
 		}
 
-		public float GetAvgAngleError { get { return AngleError.Values.Select(i => Math.Abs(i)).ToArray().Average(); } }
+		public float GetAvgAngleError
+		{
+			get
+			{
+				var absValues = AngleError.Values.Select(i => Math.Abs(i));
+				return absValues.Any() ? absValues.Average() : 0;
+			}
+		}
 
-		public float GetMaxAngleError { get { return AngleError.Values.Select(i => Math.Abs(i)).ToArray().Max(); } }
+		public float GetMaxAngleError
+		{
+			get
+			{
+				var absValues = AngleError.Values.Select(i => Math.Abs(i));
+				return absValues.Any() ? absValues.Max() : 0;
+			}
+		}
 
 		public DateTime StartTime { get; private set; }
 

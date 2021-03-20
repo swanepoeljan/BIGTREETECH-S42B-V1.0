@@ -34,6 +34,8 @@ namespace TrueStepTerminal.Helper
 			outputStream.Dispose();
 		}
 
+		public bool InputClosed => inputStream.IsClosed;
+
 		private class InputStreamClass : Stream
 		{
 			private readonly Queue<byte[]> queue;
@@ -50,61 +52,28 @@ namespace TrueStepTerminal.Helper
 				queue = parent.queue;
 			}
 
-			public override bool CanRead
-			{
-				get { return true; }
-			}
+			public override bool CanRead => true;
 
-			public override bool CanSeek
-			{
-				get { return false; }
-			}
+			public override bool CanSeek => false;
 
-			public override bool CanWrite
-			{
-				get { return false; }
-			}
+			public override bool CanWrite => false;
 
-			public override void Flush()
-			{
-				// Do nothing, always flushes.
-			}
+			public override void Flush() { }
 
-			public override long Length
-			{
-				get { throw new NotSupportedException(); }
-			}
+			public override long Length => throw new NotSupportedException();
 
 			public override long Position
 			{
-				get
-				{
-					throw new NotSupportedException();
-				}
-				set
-				{
-					throw new NotSupportedException();
-				}
+				get => throw new NotSupportedException();
+				set => throw new NotSupportedException();
 			}
 
-			public override bool CanTimeout
-			{
-				get
-				{
-					return true;
-				}
-			}
+			public override bool CanTimeout => false;
 
 			public override int ReadTimeout
 			{
-				get
-				{
-					return readTimeoutMs;
-				}
-				set
-				{
-					readTimeoutMs = value;
-				}
+				get => readTimeoutMs;
+				set => readTimeoutMs = value;
 			}
 
 			public override int Read(byte[] buffer, int offset, int count)
@@ -151,26 +120,19 @@ namespace TrueStepTerminal.Helper
 				return read;
 			}
 
-			public override long Seek(long offset, SeekOrigin origin)
-			{
-				throw new NotImplementedException();
-			}
+			public override long Seek(long offset, SeekOrigin origin) => throw new NotImplementedException();
 
-			public override void SetLength(long value)
-			{
-				throw new NotImplementedException();
-			}
+			public override void SetLength(long value) => throw new NotImplementedException();
 
-			public override void Write(byte[] buffer, int offset, int count)
-			{
-				throw new NotImplementedException();
-			}
+			public override void Write(byte[] buffer, int offset, int count) => throw new NotImplementedException();
 
 			public override void Close()
 			{
 				closed = true;
 				base.Close();
 			}
+
+			public bool IsClosed => closed;
 		}
 
 		private class OutputStreamClass : Stream
@@ -186,57 +148,27 @@ namespace TrueStepTerminal.Helper
 				queue = parent.queue;
 			}
 
-			public override bool CanRead
-			{
-				get { return false; }
-			}
+			public override bool CanRead => false;
 
-			public override bool CanSeek
-			{
-				get { return false; }
-			}
+			public override bool CanSeek => false;
 
-			public override bool CanWrite
-			{
-				get { return true; }
-			}
+			public override bool CanWrite => true;
 
-			public override void Flush()
-			{
-				// always flush
-			}
+			public override void Flush() { }
 
-			public override long Length
-			{
-				get { throw new NotSupportedException(); }
-			}
+			public override long Length => throw new NotSupportedException();
 
 			public override long Position
 			{
-				get
-				{
-					throw new NotSupportedException();
-				}
-				set
-				{
-					throw new NotSupportedException();
-				}
+				get => throw new NotSupportedException();
+				set => throw new NotSupportedException();
 			}
 
-			public override int Read(byte[] buffer, int offset, int count)
-			{
-				throw new NotSupportedException();
-			}
+			public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
 
-			public override long Seek(long offset, SeekOrigin origin)
-			{
-				throw new NotSupportedException();
-			}
+			public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
 
-			public override void SetLength(long value)
-			{
-				throw new NotSupportedException();
-			}
+			public override void SetLength(long value) => throw new NotSupportedException();
 
 			public override void Write(byte[] buffer, int offset, int count)
 			{
@@ -245,12 +177,8 @@ namespace TrueStepTerminal.Helper
 				lock (queue)
 				{
 					queue.Enqueue(copy);
-					try
-					{
-						parent.queueEvent.Set();
-					}
-					catch (Exception)
-					{ }
+					try { parent.queueEvent.Set(); }
+					catch (ObjectDisposedException) { }
 				}
 			}
 
@@ -260,20 +188,11 @@ namespace TrueStepTerminal.Helper
 				base.Close();
 
 				// Signal event, to stop waiting consumer
-				try
-				{
-					parent.queueEvent.Set();
-				}
-				catch (Exception)
-				{ }
+				try { parent.queueEvent.Set(); }
+				catch (ObjectDisposedException) { }
 			}
 
-			public bool IsClosed
-			{
-				get { return isClosed; }
-			}
+			public bool IsClosed => isClosed;
 		}
-
 	}
-
 }

@@ -20,10 +20,9 @@ namespace TrueStepTerminal
 		SerialPort sPort;
 		SerialProtocolBase serialMessages;
 		Byte[] buffer = new byte[100];
-		Parameters driverParameters;
-		System.Windows.Forms.Timer tmrAutoTune = new System.Windows.Forms.Timer();
-		int tmrAutoTuneTicks;
 		private System.Threading.Timer timerRenderScottPlot;
+		Parameters driverParameters;
+
 		private readonly PidAutotuneCalc pidAutotuneClass;
 
 		public FormMain()
@@ -34,13 +33,15 @@ namespace TrueStepTerminal
 			ScottPlotInit(formsPlot1, pidAutotuneClass.AngleDouble, pidAutotuneClass.AngleErrorDouble);
 		}
 
-		private void frmMain_Load(object sender, EventArgs e)
+		private void FrmMain_Load(object sender, EventArgs e)
 		{
 			AppSettings.LoadFromFile();
 
-			sPort = new SerialPort();
-			sPort.PortName = AppSettings.Connection.Port;
-			sPort.BaudRate = AppSettings.Connection.Baud;
+			sPort = new SerialPort
+			{
+				PortName = AppSettings.Connection.Port,
+				BaudRate = AppSettings.Connection.Baud
+			};
 			sPort.DataReceived += SPort_DataReceived;
 
 			driverParameters = new Parameters();
@@ -65,7 +66,7 @@ namespace TrueStepTerminal
 		private void UpdateEnableControls()
 		{
 			var portOpened = sPort.IsOpen;
-			gprControls.Enabled
+			grpControls.Enabled
 				= grpOverview.Enabled
 				= grpParameters.Enabled
 				= portOpened;
@@ -75,7 +76,7 @@ namespace TrueStepTerminal
 				= !portOpened;
 		}
 
-		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+		private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (chkTuningEnable.Enabled)
 				chkTuningEnable.Enabled = false;
@@ -100,11 +101,10 @@ namespace TrueStepTerminal
 
 		private void UpdateParameters(string name, string value)
 		{
-
-			if (this.InvokeRequired)
+			if (InvokeRequired)
 			{
 				var d = new UpdateParametersCallBack(UpdateParameters);
-				this.Invoke(d, name, value);
+				Invoke(d, name, value);
 			}
 			else
 			{
@@ -145,8 +145,8 @@ namespace TrueStepTerminal
 
 		private void LogToFile(double val)
 		{
-			using (System.IO.StreamWriter file =
-			new System.IO.StreamWriter(@"TuneLog.txt", true))
+			using (StreamWriter file =
+			new StreamWriter(@"TuneLog.txt", true))
 			{
 				file.WriteLine(val.ToString());
 			}
@@ -203,10 +203,8 @@ namespace TrueStepTerminal
 			MessageBox.Show(errMessage, "Packet Error");
 		}
 
-
 		private void SPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
-			
 			int bytesToRead = sPort.BytesToRead;
 			byte[] receivedBytes = new byte[bytesToRead];
 
@@ -216,8 +214,7 @@ namespace TrueStepTerminal
 				serialMessages.Parse(receivedBytes[i]);
 		}
 
-
-		private void btnConnect_Click(object sender, EventArgs e)
+		private void BtnConnect_Click(object sender, EventArgs e)
 		{
 			int baud;
 
@@ -282,42 +279,41 @@ namespace TrueStepTerminal
 
 			// Hierdie was vir die Fine Step, sal dit later weer gebruik
 			/* 
-            int loops = int.Parse(cmbStepLoop.Text);
-            UInt16 stepSize = UInt16.Parse(cmbStepSize.Text); //1800;
-            UInt16 current = UInt16.Parse(cmbStepCurrent.Text); //500;
+			int loops = int.Parse(cmbStepLoop.Text);
+			UInt16 stepSize = UInt16.Parse(cmbStepSize.Text); //1800;
+			UInt16 current = UInt16.Parse(cmbStepCurrent.Text); //500;
 
-            Messages.Msg_Command cmd;
-            if (cmbStepDirection.Text == "CCW")
-                cmd = new Messages.Msg_Command 
-                { 
-                    command = Messages.COMMAND_TYPES.STEP_FORWARD, 
-                    param1 = (byte)(stepSize >> 8), 
-                    param2 = (byte)(stepSize & 0x00FF),
-                    param3 = (byte)(current >> 8),
-                    param4 = (byte)(current & 0x00FF)
-                };
-            else
-                cmd = new Messages.Msg_Command 
-                { 
-                    command = Messages.COMMAND_TYPES.STEP_BACK, 
-                    param1 = (byte)(stepSize >> 8), 
-                    param2 = (byte)(stepSize & 0x00FF),
-                    param3 = (byte)(current >> 8),
-                    param4 = (byte)(current & 0x00FF)
-                };
+			Messages.Msg_Command cmd;
+			if (cmbStepDirection.Text == "CCW")
+				cmd = new Messages.Msg_Command 
+				{ 
+					command = Messages.COMMAND_TYPES.STEP_FORWARD, 
+					param1 = (byte)(stepSize >> 8), 
+					param2 = (byte)(stepSize & 0x00FF),
+					param3 = (byte)(current >> 8),
+					param4 = (byte)(current & 0x00FF)
+				};
+			else
+				cmd = new Messages.Msg_Command 
+				{ 
+					command = Messages.COMMAND_TYPES.STEP_BACK, 
+					param1 = (byte)(stepSize >> 8), 
+					param2 = (byte)(stepSize & 0x00FF),
+					param3 = (byte)(current >> 8),
+					param4 = (byte)(current & 0x00FF)
+				};
 
-            byte[] msg = serialMessages.GeneratePacket(cmd.Serialize());
+			byte[] msg = serialMessages.GeneratePacket(cmd.Serialize());
 
-            for (int i = 0; i < loops; i++)
-            {
-                if (sPort.IsOpen)
-                    sPort.Write(msg, 0, msg.Length);
+			for (int i = 0; i < loops; i++)
+			{
+				if (sPort.IsOpen)
+					sPort.Write(msg, 0, msg.Length);
 
-                System.Threading.Thread.Sleep(10);
-            }
-            */
+				System.Threading.Thread.Sleep(10);
+			}
+			*/
 		}
-
 
 		private void btnControlGetAngle_Click(object sender, EventArgs e)
 		{
@@ -339,7 +335,6 @@ namespace TrueStepTerminal
 				sPort.Write(msgAngErr, 0, msgAngErr.Length);
 			}
 		}
-
 
 		private void btnReadParameters_Click(object sender, EventArgs e)
 		{
@@ -389,7 +384,6 @@ namespace TrueStepTerminal
 			}
 		}
 
-
 		private void btnWriteParameters_Click(object sender, EventArgs e)
 		{
 			// Check if serial protocol object exist
@@ -426,25 +420,25 @@ namespace TrueStepTerminal
 				{
 					// Short delays here are for compatibility with BTT serial protocol, which is rather slow
 					sPort.Write(msgKp, 0, msgKp.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgKi, 0, msgKi.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgKd, 0, msgKd.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgCurrent, 0, msgCurrent.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgStepSize, 0, msgStepSize.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgENDir, 0, msgENDir.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					sPort.Write(msgMotorDir, 0, msgMotorDir.Length);
-					System.Threading.Thread.Sleep(100);
+					Thread.Sleep(100);
 
 					if (chkWriteToFlash.Enabled & chkWriteToFlash.Checked)
 					{
@@ -526,7 +520,6 @@ namespace TrueStepTerminal
 					sPort.Write(msgModeDisable, 0, msgModeDisable.Length);
 			}
 		}
-
 
 		private void SoftMove(int steps, int direction)
 		{
@@ -694,58 +687,51 @@ namespace TrueStepTerminal
 			}
 		}
 
-		private void btnFirmwareUpload_Click(object sender, EventArgs e)
+		private void BtnFirmwareUpload_Click(object sender, EventArgs e)
 		{
-			//FlashLoader flashProg = new FlashLoader();
+			OpenFileDialog openFirmwareFile = new OpenFileDialog()
+			{
+				Filter = "Bin files|*.bin|Hex files|*.hex|All files|*.*",
+				InitialDirectory = Environment.CurrentDirectory
+			};
+
+			if (openFirmwareFile.ShowDialog() != DialogResult.OK)
+				return;
+
+			var uploadFileName = openFirmwareFile.FileName;
+
+			if (string.IsNullOrEmpty(uploadFileName) || !File.Exists(uploadFileName))
+			{
+				MessageBox.Show($"File not found!{Environment.NewLine}{uploadFileName}", "Error");
+				return;
+			}
+
+			grpParameters.Enabled = grpOverview.Enabled = grpConnection.Enabled = grpControls.Enabled = false;
 
 			// Step 1: Place closed loop drive into UART bootloader mode
-			Messages.Msg_Command cmdJumpToBootloader;
-
-			cmdJumpToBootloader = new Messages.Msg_Command { command = Messages.COMMAND_TYPES.JUMP_BOOTLOADER };
-
-			byte[] msgJumpToBootloader = serialMessages.GeneratePacket(cmdJumpToBootloader.Serialize());
-
-			if (sPort.IsOpen)
-				sPort.Write(msgJumpToBootloader, 0, msgJumpToBootloader.Length);
+			BtnBootloaderRun_Click(sender, e);
 
 			// Close the port to make it available for the flashloader
 			sPort.Close();
 			while (sPort.IsOpen) ;
-
-			System.Threading.Thread.Sleep(1000);
-
+			Thread.Sleep(1000);
 
 			// Step 2: Use the STMFlashloader program to flash the selected file
-			string arguments = "-c " +
-				" --pn " + cmbPortName.Text.Replace("COM", "") +
-				" --br 115200 --db 8 --pr EVEN --sb 1 --ec OFF --to 10000 --co ON -Dtr --Hi -Rts --Lo" +
-				" -i STM32F0_5x_3x_64K" +
-				" -u --fn " + txtFirmwareUploadPath.Text +
-				" -Dtr --Lo -Rts --Hi --Lo";
+			var arguments = $"-b 115200 -w \"{uploadFileName}\" -R {cmbPortName.Text}";
 
+			Action<int, string> stm32Finished = (exitCode, errMsg) =>
+			{
+				var message = exitCode == 0 ? "Done" : string.IsNullOrEmpty(errMsg) ? "Error" : errMsg;
+				MessageBox.Show($"{message}{Environment.NewLine}Exit code: {exitCode}", $"Upload (stm32flash)");
 
-			//System.Diagnostics.Process.Start(@"C:\Program Files (x86)\STMicroelectronics\Software\Flash Loader Demo\STMFlashLoader.exe", arguments);
+				sPort.Open();
+				grpParameters.Enabled = grpOverview.Enabled = grpConnection.Enabled = grpControls.Enabled = true;
+			};
 
-			// Console.WriteLine(flashProg.Connect());
-			// Console.WriteLine(flashProg.Close());
-
-
-			System.Diagnostics.ProcessStartInfo processFlashLoader = new System.Diagnostics.ProcessStartInfo();
-			processFlashLoader.FileName = @"C:\Program Files (x86)\STMicroelectronics\Software\Flash Loader Demo\STMFlashLoader.exe";
-			processFlashLoader.Arguments = arguments;
-			processFlashLoader.RedirectStandardOutput = true;
-			processFlashLoader.UseShellExecute = false;
-
-			System.Diagnostics.Process p = new System.Diagnostics.Process();
-			p.OutputDataReceived += (sende, args) => Console.WriteLine("FlashLoader: {0}", args.Data);
-
-			p.StartInfo = processFlashLoader; //System.Diagnostics.Process.Start(processFlashLoader);
-			p.Start();
-			p.BeginOutputReadLine();
-
+			RunStm32Flasher(arguments, stm32Finished);
 		}
 
-		private void btnFirmwareDownload_Click(object sender, EventArgs e)
+		private void BtnFirmwareDownload_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog saveFirmwareFile = new SaveFileDialog();
 			saveFirmwareFile.Filter = "Bin files|*.bin|Hex files|*.hex|All files|*.*";
@@ -755,179 +741,110 @@ namespace TrueStepTerminal
 
 			string saveFileName = saveFirmwareFile.FileName;
 
+			grpParameters.Enabled = grpOverview.Enabled = grpConnection.Enabled = grpControls.Enabled = false;
+
 			// Step 1: Place closed loop drive into UART bootloader mode
-			Messages.Msg_Command cmdJumpToBootloader;
-
-			cmdJumpToBootloader = new Messages.Msg_Command { command = Messages.COMMAND_TYPES.JUMP_BOOTLOADER };
-
-			byte[] msgJumpToBootloader = serialMessages.GeneratePacket(cmdJumpToBootloader.Serialize());
-
-			if (sPort.IsOpen)
-				sPort.Write(msgJumpToBootloader, 0, msgJumpToBootloader.Length);
+			BtnBootloaderRun_Click(sender, e);
 
 			// Close the port to make it available for the flashloader
 			sPort.Close();
 			while (sPort.IsOpen) ;
-
 			Thread.Sleep(1000);
-
 
 			// Step 2: Use the STMFlashloader program to download to the selected file
 			var arguments = $"-b 115200 -r \"{saveFileName}\" -R {cmbPortName.Text}";
 
-			//@"C:\Program Files (x86)\STMicroelectronics\Software\Flash Loader Demo\STMFlashLoader.exe";
+			rtfStm32Log.Text = "";
+
+			Action<int, string> stm32Finished = (exitCode, errMsg) =>
+			{
+				var message = exitCode == 0 ? "Done" : string.IsNullOrEmpty(errMsg) ? "Error" : errMsg;
+				MessageBox.Show($"{message}{Environment.NewLine}Exit code: {exitCode}", $"Download (stm32flash)");
+
+				sPort.Open();
+				grpParameters.Enabled = grpOverview.Enabled = grpConnection.Enabled = grpControls.Enabled = true;
+			};
+
+			RunStm32Flasher(arguments, stm32Finished);
+
+		}
+
+		private void RunStm32Flasher(string arguments, Action<int, string> processFinished)
+		{
+			var errorStream = new MemoryStream();
 
 			try
 			{
-				var fileName = @"stm32flash\stm32flash.exe";
+				var stm32flashFile = @"stm32flash\stm32flash.exe";
 
 				var tpStream = new ThrouputStream();
-				var tw = new StreamWriter(tpStream.OutputStream);
-				var tr = new StreamReader(tpStream.InputStream);
 
+				// STM32Flash process
 				var threadProcessStart = new Thread(() =>
 				{
-					var exitCode = ThreadHelperClass.StartProcess(fileName, arguments, timeout: 10000, outputTextWriter: tw).Result;
+					var exitCode = ThreadHelperClass.StartProcess(
+						stm32flashFile,
+						arguments,
+#if !DEBUG
+						timeout: 10000, 
+#endif
+						outputTextWriter: new StreamWriter(tpStream.OutputStream),
+						errorTextWriter: new StreamWriter(errorStream)
+					).Result;
+
+					// process Finished
 					_ = BeginInvoke(new Action(() =>
 					{
-						var message = exitCode == 0 ? "Done" : "Error";
-						MessageBox.Show(message + $"\nExit code: {exitCode}", $"stm32flash");
-						tpStream.Dispose();
+						errorStream.Seek(0, SeekOrigin.Begin);
+						var errMsg = new StreamReader(errorStream).ReadToEnd();
+						processFinished(exitCode, errMsg);
 					}));
+					tpStream.Dispose();
 				})
 				{ Name = "StartProcess" };
 				threadProcessStart.Start();
 
-				//Console.WriteLine($"Process Exited with Exit Code {exitCode}!");
 				var threadReadOutput = new Thread(() =>
-				 {
-					 string line;
-					 var processRegex = new Regex(@"(?<name>\w+\s\w+)\s(?<addr>\dx\w+)\s\((?<proc>\d+.\d+)%\)");
-					 while ((line = tr.ReadLine()) != null)
-					 {
-						 var mc = processRegex.Match(line);
-						 if (mc.Groups.Count == 0)
-							 // add log to text box
-							 BeginInvoke(new Action<string>((s) => { rtbFirmware.Text += $"{s}{Environment.NewLine}"; }), line);
-						 else if (float.TryParse(mc.Groups["proc"].Value, out float proc))
-							 BeginInvoke(new Action(() => progressBarDownloadProgress.Value = (int)proc));
-					 }
-				 })
+				{
+					var tr = new StreamReader(tpStream.InputStream);
+					string line;
+					var processRegex = new Regex(@"(?<name>\w+\s\w+)\s(?<addr>\dx\w+)\s\((?<proc>\d+.\d+)%\)");
+
+					while (!tpStream.InputClosed)
+					{
+						line = tr.ReadLine();
+						if (line == null) continue;
+
+						var mc = processRegex.Match(line);
+						if (mc.Groups.Count != 4)
+							_ = BeginInvoke(new Action<string>((s) => { rtfStm32Log.Text += $"{s}{Environment.NewLine}"; }), line);
+						else if (float.TryParse(mc.Groups["proc"].Value, out float proc))
+							_ = BeginInvoke(new Action<string, int, string>(
+							   (addr, p, l) =>
+							   {
+								   progressBarDownloadProgress.Value = p;
+								   progressBarDownloadProgress.CustomText = $"addr:({addr}) [{p}%]";
+								   //rtfStm32Log.Text += $"{l}{Environment.NewLine}";
+							   })
+							   , mc.Groups["addr"].Value, (int)proc, line);
+						else
+							_ = BeginInvoke(new Action<string>((s) => { rtfStm32Log.Text += $"{s}{Environment.NewLine}"; }), line);
+					}
+					//_ = BeginInvoke(new Action<string>((s) => { rtfStm32Log.Text += $"{s}{Environment.NewLine}"; }), "[DONE]");
+				})
+
 				{ Name = "ReadOutput" };
 				threadReadOutput.Start();
-
-				//using (var p = new Process())
-				//{
-
-				//	p.StartInfo.FileName = fileName;
-				//	p.StartInfo.Arguments = arguments;
-				//	p.StartInfo.RedirectStandardOutput = true;
-				//	p.StartInfo.UseShellExecute = false;
-				//	p.StartInfo.CreateNoWindow = true;
-				//	p.EnableRaisingEvents = true;
-
-				//	p.OutputDataReceived += (snder, evnt) =>
-				//	{
-				//		if (string.IsNullOrEmpty(evnt.Data))
-				//			return;
-
-				//		var processRegex = new Regex(@"(?<name>\w+\s\w+)\s(?<addr>\dx\w+)\s\((?<proc>\d+.\d+)%\)");
-				//		var mc = processRegex.Match(evnt.Data);
-				//		if (mc.Groups.Count == 0)
-				//			// add log to text box
-				//			BeginInvoke(new Action<string>((s) => { rtbFirmware.Text += $"{s}{Environment.NewLine}"; }), evnt.Data);
-				//		else if (float.TryParse(mc.Groups["proc"].Value, out float proc))
-				//			BeginInvoke(new Action(() => progressBarDownloadProgress.Value = (int)proc));
-				//	};
-
-				//	p.Exited += (snder, evnt) =>
-				//	{
-				//		p.CancelOutputRead();
-				//		_ = BeginInvoke(new Action(() =>
-				//		  {
-				//			  var message = p.ExitCode == 0 ? "Done" : "Error";
-				//			  MessageBox.Show(message + $"\nExit code: {p.ExitCode}", $"stm32flash");
-				//		  }));
-				//	};
-
-				//	p.Start();
-				//	p.BeginOutputReadLine();
-
-				//	p.WaitForExitAsync().Wait();
-				//}
-
-				//Thread.Sleep(100);
-
-				//new Thread(() =>
-				//{
-				//	string line;
-				//	var processRegex = new Regex(@"(?<name>\w+\s\w+)\s(?<addr>\dx\w+)\s\((?<proc>\d+.\d+)%\)");
-				//	while ((line = p.StandardOutput.ReadLine()) != null)
-				//	{
-				//		var mc = processRegex.Match(line);
-				//		if (mc.Groups.Count == 0)
-				//			// add log to text box
-				//			BeginInvoke(new Action<string>((s) => { rtbFirmware.Text += $"{s}{Environment.NewLine}"; }), line);
-				//		else if (float.TryParse(mc.Groups["proc"].Value, out float proc))
-				//			BeginInvoke(new Action(() => progressBarDownloadProgress.Value = (int)proc));
-				//	}
-				//})
-				//{ IsBackground = true }.Start();
-
-
-				//Thread.Sleep(100);
-				//p.WaitForExit();
-				//p.CancelOutputRead();
-				//var whaitThread = new Thread(new ParameterizedThreadStart((param) =>
-				//{
-				//	var prc = param as Process;
-				//	prc.WaitForExit();
-				//	prc.CancelOutputRead();
-				//}))
-				//{ Name = "WaitForExit stm32flash" };
-				//whaitThread.Start(p);
-
-
-				/*
-stm32flash 0.6
-
-http://stm32flash.sourceforge.net/
-
-Interface serial_w32: 115200 8E1
-Version      : 0x31
-Option 1     : 0x00
-Option 2     : 0x00
-Device ID    : 0x0440 (STM32F030x8/F05xxx)
-- RAM        : Up to 8KiB  (2048b reserved by bootloader)
-- Flash      : Up to 64KiB (size first sector: 4x1024)
-- Option RAM : 16b
-- System RAM : 3KiB
-Memory read
-
-Read address 0x08000100 (0.39%) 
-Read address 0x08000200 (0.78%) 
-
-Read address 0x0800fd00 (98.83%) 
-Read address 0x0800fe00 (99.22%) 
-Read address 0x0800ff00 (99.61%) 
-Read address 0x08010000 (100.00%) Done.
-
-Resetting device... 
-Reset done.
-				 */
-
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, $"Fatal error");
+				//MessageBox.Show(ex.Message, $"Fatal error");
+				processFinished(-1, ex.Message);
 			}
 		}
 
 
-
-
-
-		private void chkBTTProtocol_CheckedChanged(object sender, EventArgs e)
+		private void ChkBTTProtocol_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chkBTTProtocol.Checked)
 			{
@@ -945,22 +862,12 @@ Reset done.
 			}
 		}
 
-		private void btnBrowseFirmware_Click(object sender, EventArgs e)
+		private void BtnBootloaderRun_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog openFirmwareFile = new OpenFileDialog();
-			openFirmwareFile.Filter = "Bin files|*.bin|Hex files|*.hex|All files|*.*";
-
-			if (openFirmwareFile.ShowDialog() == DialogResult.OK)
-			{
-				txtFirmwareUploadPath.Text = openFirmwareFile.FileName;
-			}
+			Messages.Msg_Command cmdJumpToBootloader = new Messages.Msg_Command { command = Messages.COMMAND_TYPES.JUMP_BOOTLOADER };
+			byte[] msgJumpToBootloader = serialMessages.GeneratePacket(cmdJumpToBootloader.Serialize());
+			if (sPort.IsOpen)
+				sPort.Write(msgJumpToBootloader, 0, msgJumpToBootloader.Length);
 		}
-
-
-		private void chkChangeDirection_CheckedChanged(object sender, EventArgs e)
-		{
-
-		}
-
 	}
 }

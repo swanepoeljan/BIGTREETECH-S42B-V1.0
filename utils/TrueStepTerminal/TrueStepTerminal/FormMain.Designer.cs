@@ -42,7 +42,7 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.lblAngleValue = new System.Windows.Forms.Label();
-			this.gprControls = new System.Windows.Forms.GroupBox();
+			this.grpControls = new System.Windows.Forms.GroupBox();
 			this.tabControls = new System.Windows.Forms.TabControl();
 			this.tabPageMain = new System.Windows.Forms.TabPage();
 			this.panelControlsMain = new System.Windows.Forms.Panel();
@@ -63,17 +63,12 @@
 			this.numericUpDownStepInterval = new System.Windows.Forms.NumericUpDown();
 			this.btnAutoTune = new System.Windows.Forms.Button();
 			this.chkTuningEnable = new System.Windows.Forms.CheckBox();
-			this.formsPlot1 = new TrueStepTerminal.FormsPlotMouseXTrack();
 			this.tabPageFirmware = new System.Windows.Forms.TabPage();
 			this.panelControlsFirmware = new System.Windows.Forms.Panel();
-			this.rtbFirmware = new System.Windows.Forms.RichTextBox();
-			this.progressBarDownloadProgress = new System.Windows.Forms.ProgressBar();
-			this.label10 = new System.Windows.Forms.Label();
+			this.rtfStm32Log = new System.Windows.Forms.RichTextBox();
 			this.btnFirmwareDownload = new System.Windows.Forms.Button();
 			this.btnFirmwareUpload = new System.Windows.Forms.Button();
 			this.label11 = new System.Windows.Forms.Label();
-			this.txtFirmwareUploadPath = new System.Windows.Forms.TextBox();
-			this.btnBrowseFirmware = new System.Windows.Forms.Button();
 			this.tabPageExperimental = new System.Windows.Forms.TabPage();
 			this.panelControlsExperimental = new System.Windows.Forms.Panel();
 			this.label7 = new System.Windows.Forms.Label();
@@ -96,12 +91,15 @@
 			this.btnClose = new System.Windows.Forms.Button();
 			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
 			this.panelMain = new System.Windows.Forms.Panel();
+			this.btnBootloaderRun = new System.Windows.Forms.Button();
+			this.formsPlot1 = new TrueStepTerminal.FormsPlotMouseXTrack();
+			this.progressBarDownloadProgress = new TrueStepTerminal.Controls.CustomProgressBar();
 			this.grpParameters.SuspendLayout();
 			this.panelParameters.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewParameters)).BeginInit();
 			this.grpOverview.SuspendLayout();
 			this.panelOverview.SuspendLayout();
-			this.gprControls.SuspendLayout();
+			this.grpControls.SuspendLayout();
 			this.tabControls.SuspendLayout();
 			this.tabPageMain.SuspendLayout();
 			this.panelControlsMain.SuspendLayout();
@@ -260,18 +258,18 @@
 			this.lblAngleValue.TabIndex = 13;
 			this.lblAngleValue.Text = "0";
 			// 
-			// gprControls
+			// grpControls
 			// 
-			this.gprControls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.grpControls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gprControls.Controls.Add(this.tabControls);
-			this.gprControls.Location = new System.Drawing.Point(3, 212);
-			this.gprControls.Name = "gprControls";
-			this.gprControls.Size = new System.Drawing.Size(786, 399);
-			this.gprControls.TabIndex = 3;
-			this.gprControls.TabStop = false;
-			this.gprControls.Text = "Controls";
+			this.grpControls.Controls.Add(this.tabControls);
+			this.grpControls.Location = new System.Drawing.Point(3, 212);
+			this.grpControls.Name = "grpControls";
+			this.grpControls.Size = new System.Drawing.Size(786, 399);
+			this.grpControls.TabIndex = 3;
+			this.grpControls.TabStop = false;
+			this.grpControls.Text = "Controls";
 			// 
 			// tabControls
 			// 
@@ -331,7 +329,6 @@
 			this.chkChangeDirection.TabIndex = 20;
 			this.chkChangeDirection.Text = "Change Direction";
 			this.chkChangeDirection.UseVisualStyleBackColor = true;
-			this.chkChangeDirection.CheckedChanged += new System.EventHandler(this.chkChangeDirection_CheckedChanged);
 			// 
 			// groupBox1
 			// 
@@ -517,17 +514,6 @@
 			this.chkTuningEnable.UseVisualStyleBackColor = true;
 			this.chkTuningEnable.CheckedChanged += new System.EventHandler(this.chkTuningEnable_CheckedChanged);
 			// 
-			// formsPlot1
-			// 
-			this.formsPlot1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.formsPlot1.BackColor = System.Drawing.Color.Transparent;
-			this.formsPlot1.Location = new System.Drawing.Point(3, 3);
-			this.formsPlot1.Name = "formsPlot1";
-			this.formsPlot1.Size = new System.Drawing.Size(605, 338);
-			this.formsPlot1.TabIndex = 24;
-			// 
 			// tabPageFirmware
 			// 
 			this.tabPageFirmware.Controls.Add(this.panelControlsFirmware);
@@ -540,98 +526,61 @@
 			// 
 			// panelControlsFirmware
 			// 
-			this.panelControlsFirmware.Controls.Add(this.rtbFirmware);
+			this.panelControlsFirmware.Controls.Add(this.btnBootloaderRun);
 			this.panelControlsFirmware.Controls.Add(this.progressBarDownloadProgress);
-			this.panelControlsFirmware.Controls.Add(this.label10);
+			this.panelControlsFirmware.Controls.Add(this.rtfStm32Log);
 			this.panelControlsFirmware.Controls.Add(this.btnFirmwareDownload);
 			this.panelControlsFirmware.Controls.Add(this.btnFirmwareUpload);
 			this.panelControlsFirmware.Controls.Add(this.label11);
-			this.panelControlsFirmware.Controls.Add(this.txtFirmwareUploadPath);
-			this.panelControlsFirmware.Controls.Add(this.btnBrowseFirmware);
 			this.panelControlsFirmware.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsFirmware.Location = new System.Drawing.Point(0, 0);
 			this.panelControlsFirmware.Name = "panelControlsFirmware";
 			this.panelControlsFirmware.Size = new System.Drawing.Size(763, 344);
 			this.panelControlsFirmware.TabIndex = 23;
 			// 
-			// rtbFirmware
+			// rtfStm32Log
 			// 
-			this.rtbFirmware.Location = new System.Drawing.Point(3, 111);
-			this.rtbFirmware.Name = "rtbFirmware";
-			this.rtbFirmware.ReadOnly = true;
-			this.rtbFirmware.Size = new System.Drawing.Size(676, 230);
-			this.rtbFirmware.TabIndex = 26;
-			this.rtbFirmware.Text = "";
-			// 
-			// progressBarDownloadProgress
-			// 
-			this.progressBarDownloadProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.rtfStm32Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBarDownloadProgress.Location = new System.Drawing.Point(3, 82);
-			this.progressBarDownloadProgress.Name = "progressBarDownloadProgress";
-			this.progressBarDownloadProgress.Size = new System.Drawing.Size(676, 23);
-			this.progressBarDownloadProgress.TabIndex = 23;
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 10);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(65, 13);
-			this.label10.TabIndex = 19;
-			this.label10.Text = "Firmware file";
+			this.rtfStm32Log.Location = new System.Drawing.Point(3, 54);
+			this.rtfStm32Log.Name = "rtfStm32Log";
+			this.rtfStm32Log.ReadOnly = true;
+			this.rtfStm32Log.Size = new System.Drawing.Size(676, 287);
+			this.rtfStm32Log.TabIndex = 26;
+			this.rtfStm32Log.Text = "";
 			// 
 			// btnFirmwareDownload
 			// 
 			this.btnFirmwareDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareDownload.Location = new System.Drawing.Point(685, 82);
+			this.btnFirmwareDownload.Location = new System.Drawing.Point(685, 54);
 			this.btnFirmwareDownload.Name = "btnFirmwareDownload";
 			this.btnFirmwareDownload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareDownload.TabIndex = 22;
 			this.btnFirmwareDownload.Text = "Download";
 			this.btnFirmwareDownload.UseVisualStyleBackColor = true;
-			this.btnFirmwareDownload.Click += new System.EventHandler(this.btnFirmwareDownload_Click);
+			this.btnFirmwareDownload.Click += new System.EventHandler(this.BtnFirmwareDownload_Click);
 			// 
 			// btnFirmwareUpload
 			// 
 			this.btnFirmwareUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareUpload.Location = new System.Drawing.Point(685, 53);
+			this.btnFirmwareUpload.Location = new System.Drawing.Point(685, 25);
 			this.btnFirmwareUpload.Name = "btnFirmwareUpload";
 			this.btnFirmwareUpload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareUpload.TabIndex = 17;
 			this.btnFirmwareUpload.Text = "Upload";
 			this.btnFirmwareUpload.UseVisualStyleBackColor = true;
-			this.btnFirmwareUpload.Click += new System.EventHandler(this.btnFirmwareUpload_Click);
+			this.btnFirmwareUpload.Click += new System.EventHandler(this.BtnFirmwareUpload_Click);
 			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
 			this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label11.Location = new System.Drawing.Point(3, 49);
+			this.label11.Location = new System.Drawing.Point(3, 9);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(267, 13);
 			this.label11.TabIndex = 21;
 			this.label11.Text = "Firmware upload/download using the UART bootloader";
-			// 
-			// txtFirmwareUploadPath
-			// 
-			this.txtFirmwareUploadPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtFirmwareUploadPath.Location = new System.Drawing.Point(3, 26);
-			this.txtFirmwareUploadPath.Name = "txtFirmwareUploadPath";
-			this.txtFirmwareUploadPath.Size = new System.Drawing.Size(676, 20);
-			this.txtFirmwareUploadPath.TabIndex = 18;
-			// 
-			// btnBrowseFirmware
-			// 
-			this.btnBrowseFirmware.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrowseFirmware.Location = new System.Drawing.Point(685, 24);
-			this.btnBrowseFirmware.Name = "btnBrowseFirmware";
-			this.btnBrowseFirmware.Size = new System.Drawing.Size(75, 23);
-			this.btnBrowseFirmware.TabIndex = 20;
-			this.btnBrowseFirmware.Text = "&Browse";
-			this.btnBrowseFirmware.UseVisualStyleBackColor = true;
-			this.btnBrowseFirmware.Click += new System.EventHandler(this.btnBrowseFirmware_Click);
 			// 
 			// tabPageExperimental
 			// 
@@ -801,7 +750,7 @@
 			this.chkBTTProtocol.TabIndex = 11;
 			this.chkBTTProtocol.Text = "Use BTT protocol";
 			this.chkBTTProtocol.UseVisualStyleBackColor = true;
-			this.chkBTTProtocol.CheckedChanged += new System.EventHandler(this.chkBTTProtocol_CheckedChanged);
+			this.chkBTTProtocol.CheckedChanged += new System.EventHandler(this.ChkBTTProtocol_CheckedChanged);
 			// 
 			// btnConnect
 			// 
@@ -811,7 +760,7 @@
 			this.btnConnect.TabIndex = 10;
 			this.btnConnect.Text = "Connect";
 			this.btnConnect.UseVisualStyleBackColor = true;
-			this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+			this.btnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
 			// 
 			// label2
 			// 
@@ -846,6 +795,7 @@
 			this.cmbPortName.Name = "cmbPortName";
 			this.cmbPortName.Size = new System.Drawing.Size(98, 21);
 			this.cmbPortName.TabIndex = 6;
+			this.cmbPortName.DropDown += new System.EventHandler(this.cmbPortName_DropDown);
 			// 
 			// btnClose
 			// 
@@ -865,14 +815,46 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelMain.Controls.Add(this.grpConnection);
 			this.panelMain.Controls.Add(this.grpOverview);
-			this.panelMain.Controls.Add(this.gprControls);
+			this.panelMain.Controls.Add(this.grpControls);
 			this.panelMain.Controls.Add(this.grpParameters);
 			this.panelMain.Location = new System.Drawing.Point(12, 12);
 			this.panelMain.Name = "panelMain";
 			this.panelMain.Size = new System.Drawing.Size(792, 614);
 			this.panelMain.TabIndex = 6;
 			// 
-			// frmMain
+			// btnBootloaderRun
+			// 
+			this.btnBootloaderRun.Location = new System.Drawing.Point(685, 83);
+			this.btnBootloaderRun.Name = "btnBootloaderRun";
+			this.btnBootloaderRun.Size = new System.Drawing.Size(74, 24);
+			this.btnBootloaderRun.TabIndex = 28;
+			this.btnBootloaderRun.Text = "Bootloader";
+			this.btnBootloaderRun.UseVisualStyleBackColor = true;
+			this.btnBootloaderRun.Click += new System.EventHandler(this.BtnBootloaderRun_Click);
+			// 
+			// formsPlot1
+			// 
+			this.formsPlot1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.formsPlot1.BackColor = System.Drawing.Color.Transparent;
+			this.formsPlot1.Location = new System.Drawing.Point(3, 3);
+			this.formsPlot1.Name = "formsPlot1";
+			this.formsPlot1.Size = new System.Drawing.Size(605, 338);
+			this.formsPlot1.TabIndex = 24;
+			// 
+			// progressBarDownloadProgress
+			// 
+			this.progressBarDownloadProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBarDownloadProgress.CustomText = null;
+			this.progressBarDownloadProgress.DisplayStyle = TrueStepTerminal.Controls.ProgressBarDisplayText.CustomText;
+			this.progressBarDownloadProgress.Location = new System.Drawing.Point(3, 25);
+			this.progressBarDownloadProgress.Name = "progressBarDownloadProgress";
+			this.progressBarDownloadProgress.Size = new System.Drawing.Size(676, 23);
+			this.progressBarDownloadProgress.TabIndex = 27;
+			// 
+			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -881,10 +863,10 @@
 			this.Controls.Add(this.btnClose);
 			this.DoubleBuffered = true;
 			this.MinimumSize = new System.Drawing.Size(450, 650);
-			this.Name = "frmMain";
+			this.Name = "FormMain";
 			this.Text = "TrueStep Terminal";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-			this.Load += new System.EventHandler(this.frmMain_Load);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+			this.Load += new System.EventHandler(this.FrmMain_Load);
 			this.grpParameters.ResumeLayout(false);
 			this.panelParameters.ResumeLayout(false);
 			this.panelParameters.PerformLayout();
@@ -892,7 +874,7 @@
 			this.grpOverview.ResumeLayout(false);
 			this.panelOverview.ResumeLayout(false);
 			this.panelOverview.PerformLayout();
-			this.gprControls.ResumeLayout(false);
+			this.grpControls.ResumeLayout(false);
 			this.tabControls.ResumeLayout(false);
 			this.tabPageMain.ResumeLayout(false);
 			this.panelControlsMain.ResumeLayout(false);
@@ -922,7 +904,6 @@
         #endregion
         private System.Windows.Forms.GroupBox grpParameters;
         private System.Windows.Forms.GroupBox grpOverview;
-        private System.Windows.Forms.GroupBox gprControls;
         private System.Windows.Forms.GroupBox grpConnection;
         private System.Windows.Forms.Button btnControlGetAngle;
         private System.Windows.Forms.ComboBox cmbStepDirection;
@@ -945,9 +926,6 @@
         private System.Windows.Forms.TabPage tabPageTuning;
         private System.Windows.Forms.Button btnFirmwareUpload;
         private System.Windows.Forms.TabPage tabPageFirmware;
-        private System.Windows.Forms.Button btnBrowseFirmware;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtFirmwareUploadPath;
         private System.Windows.Forms.ToolTip toolTips;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnFirmwareDownload;
@@ -985,8 +963,10 @@
 		private System.Windows.Forms.ComboBox cmbPortBaud;
 		private System.Windows.Forms.ComboBox cmbPortName;
 		private System.Windows.Forms.Panel panelMain;
-		private System.Windows.Forms.ProgressBar progressBarDownloadProgress;
-		private System.Windows.Forms.RichTextBox rtbFirmware;
+		private System.Windows.Forms.RichTextBox rtfStm32Log;
+		private Controls.CustomProgressBar progressBarDownloadProgress;
+		private System.Windows.Forms.Button btnBootloaderRun;
+		private System.Windows.Forms.GroupBox grpControls;
 	}
 }
 
