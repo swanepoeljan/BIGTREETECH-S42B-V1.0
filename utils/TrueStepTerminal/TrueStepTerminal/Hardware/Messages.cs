@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrueStepTerminal
 {
-    public class Messages
+	public class Messages
     {
 
         public enum MESSAGE_IDS
@@ -26,6 +21,7 @@ namespace TrueStepTerminal
             STATUS          = 20,
             VALUE_ANGLE     = 21,
             VALUE_ANGLE_ERR = 22,
+            VALUE_TUNING_PID= 23,
         }
 
         public enum VALUE_TYPES
@@ -49,17 +45,18 @@ namespace TrueStepTerminal
 
         public enum COMMAND_TYPES
         {
-            STEP            = 0,
-            STEP_FORWARD    = 1,
-            STEP_BACK       = 2,
-            MOVE            = 3,
-            STORAGE_SAVE    = 5,
-            MODE_ENABLE     = 10,
-            MODE_DISABLE    = 11,
-            MODE_CLOSELOOP  = 12,
-            MODE_OPENLOOP   = 13,
-            STREAM_ANGLE    = 20,
-            JUMP_BOOTLOADER = 30,
+            STEP                = 0,
+            STEP_FORWARD        = 1,
+            STEP_BACK           = 2,
+            MOVE                = 3,
+            STORAGE_SAVE        = 5,
+            MODE_ENABLE         = 10,
+            MODE_DISABLE        = 11,
+            MODE_CLOSELOOP      = 12,
+            MODE_OPENLOOP       = 13,
+            STREAM_ANGLE        = 20,
+            STREAM_TUNING_PID   = 21,
+            JUMP_BOOTLOADER     = 30,
         }
 
         [Serializable]

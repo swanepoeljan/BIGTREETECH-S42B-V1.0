@@ -1,64 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace TrueStepTerminal
 {
-    public class Parameters
-    {
-        public class ParameterItem
-        {
-            public string paramName;
+	public class Parameters
+	{
+		public class ParameterItem
+		{
+			private string paramName;
 
-            public double paramValue;
-            public string Name 
-            { 
-                get 
-                { 
-                    return paramName; 
-                } 
-                set 
-                { 
-                    paramName = value; 
-                } 
-            }
-            public string Value 
-            { 
-                get 
-                { 
-                    return paramValue.ToString(); 
-                } 
-                set 
-                {
-                    double result;
-                    if (double.TryParse(value.ToString(), out result))
-                        paramValue = result; 
-                } 
-            }
+			public string Name => paramName;
 
-            public ParameterItem()
-            {
+			public string ValueStr { get; set; }
+			public double Value
+			{
+				get
+				{
+					double.TryParse(ValueStr, out double result);
+					return result;
+				}
+				set { ValueStr = value.ToString(); }
+			}
 
-            }
+			public ParameterItem(string name, double value)
+			{
+				paramName = name;
+				ValueStr = value.ToString();
+			}
 
-            public ParameterItem(string name, double value)
-            {
-                paramName = name;
-                paramValue = value;
-            }
+			public ParameterItem(string name, string value)
+			{
+				paramName = name;
+				ValueStr = value;
+			}
+		}
 
-            public ParameterItem(string name, string value)
-            {
-                paramName = name;
-                paramValue = double.Parse(value);
-            }
-        }
-
-        public BindingList<ParameterItem> Items = new BindingList<ParameterItem>();
-
-       
-    }
+		public BindingList<ParameterItem> Items = new BindingList<ParameterItem>();
+	}
 }
