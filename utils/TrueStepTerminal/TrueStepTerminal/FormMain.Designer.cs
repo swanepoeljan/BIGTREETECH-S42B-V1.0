@@ -1,6 +1,8 @@
-﻿namespace TrueStepTerminal
+﻿using TrueStepTerminal.Controls;
+
+namespace TrueStepTerminal
 {
-    partial class FormMain
+	partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -63,8 +65,11 @@
 			this.numericUpDownStepInterval = new System.Windows.Forms.NumericUpDown();
 			this.btnAutoTune = new System.Windows.Forms.Button();
 			this.chkTuningEnable = new System.Windows.Forms.CheckBox();
+			this.formsPlot1 = new TrueStepTerminal.Controls.FormsPlotMouseYTrack();
 			this.tabPageFirmware = new System.Windows.Forms.TabPage();
 			this.panelControlsFirmware = new System.Windows.Forms.Panel();
+			this.btnBootloaderRun = new System.Windows.Forms.Button();
+			this.progressBarDownloadProgress = new TrueStepTerminal.Controls.CustomProgressBar();
 			this.rtfStm32Log = new System.Windows.Forms.RichTextBox();
 			this.btnFirmwareDownload = new System.Windows.Forms.Button();
 			this.btnFirmwareUpload = new System.Windows.Forms.Button();
@@ -91,9 +96,6 @@
 			this.btnClose = new System.Windows.Forms.Button();
 			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
 			this.panelMain = new System.Windows.Forms.Panel();
-			this.btnBootloaderRun = new System.Windows.Forms.Button();
-			this.formsPlot1 = new TrueStepTerminal.FormsPlotMouseXTrack();
-			this.progressBarDownloadProgress = new TrueStepTerminal.Controls.CustomProgressBar();
 			this.grpParameters.SuspendLayout();
 			this.panelParameters.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewParameters)).BeginInit();
@@ -125,7 +127,7 @@
 			this.grpParameters.Controls.Add(this.panelParameters);
 			this.grpParameters.Location = new System.Drawing.Point(241, 6);
 			this.grpParameters.Name = "grpParameters";
-			this.grpParameters.Size = new System.Drawing.Size(548, 200);
+			this.grpParameters.Size = new System.Drawing.Size(467, 200);
 			this.grpParameters.TabIndex = 1;
 			this.grpParameters.TabStop = false;
 			this.grpParameters.Text = "Parameters";
@@ -139,14 +141,14 @@
 			this.panelParameters.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelParameters.Location = new System.Drawing.Point(3, 16);
 			this.panelParameters.Name = "panelParameters";
-			this.panelParameters.Size = new System.Drawing.Size(542, 181);
+			this.panelParameters.Size = new System.Drawing.Size(461, 181);
 			this.panelParameters.TabIndex = 6;
 			// 
 			// chkWriteToFlash
 			// 
 			this.chkWriteToFlash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkWriteToFlash.AutoSize = true;
-			this.chkWriteToFlash.Location = new System.Drawing.Point(464, 61);
+			this.chkWriteToFlash.Location = new System.Drawing.Point(382, 61);
 			this.chkWriteToFlash.Name = "chkWriteToFlash";
 			this.chkWriteToFlash.Size = new System.Drawing.Size(67, 17);
 			this.chkWriteToFlash.TabIndex = 7;
@@ -156,7 +158,7 @@
 			// btnWriteParameters
 			// 
 			this.btnWriteParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnWriteParameters.Location = new System.Drawing.Point(464, 32);
+			this.btnWriteParameters.Location = new System.Drawing.Point(382, 32);
 			this.btnWriteParameters.Name = "btnWriteParameters";
 			this.btnWriteParameters.Size = new System.Drawing.Size(75, 23);
 			this.btnWriteParameters.TabIndex = 6;
@@ -167,7 +169,7 @@
 			// btnReadParameters
 			// 
 			this.btnReadParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnReadParameters.Location = new System.Drawing.Point(464, 3);
+			this.btnReadParameters.Location = new System.Drawing.Point(382, 3);
 			this.btnReadParameters.Name = "btnReadParameters";
 			this.btnReadParameters.Size = new System.Drawing.Size(75, 23);
 			this.btnReadParameters.TabIndex = 5;
@@ -185,7 +187,7 @@
 			this.dataGridViewParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridViewParameters.Location = new System.Drawing.Point(3, 3);
 			this.dataGridViewParameters.Name = "dataGridViewParameters";
-			this.dataGridViewParameters.Size = new System.Drawing.Size(455, 175);
+			this.dataGridViewParameters.Size = new System.Drawing.Size(373, 175);
 			this.dataGridViewParameters.TabIndex = 2;
 			// 
 			// grpOverview
@@ -266,7 +268,7 @@
 			this.grpControls.Controls.Add(this.tabControls);
 			this.grpControls.Location = new System.Drawing.Point(3, 212);
 			this.grpControls.Name = "grpControls";
-			this.grpControls.Size = new System.Drawing.Size(786, 399);
+			this.grpControls.Size = new System.Drawing.Size(705, 354);
 			this.grpControls.TabIndex = 3;
 			this.grpControls.TabStop = false;
 			this.grpControls.Text = "Controls";
@@ -283,7 +285,7 @@
 			this.tabControls.Location = new System.Drawing.Point(9, 19);
 			this.tabControls.Name = "tabControls";
 			this.tabControls.SelectedIndex = 0;
-			this.tabControls.Size = new System.Drawing.Size(771, 370);
+			this.tabControls.Size = new System.Drawing.Size(693, 329);
 			this.tabControls.TabIndex = 12;
 			// 
 			// tabPageMain
@@ -292,7 +294,7 @@
 			this.tabPageMain.Location = new System.Drawing.Point(4, 22);
 			this.tabPageMain.Name = "tabPageMain";
 			this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageMain.Size = new System.Drawing.Size(763, 344);
+			this.tabPageMain.Size = new System.Drawing.Size(638, 273);
 			this.tabPageMain.TabIndex = 0;
 			this.tabPageMain.Text = "Main";
 			this.tabPageMain.UseVisualStyleBackColor = true;
@@ -307,7 +309,7 @@
 			this.panelControlsMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsMain.Location = new System.Drawing.Point(3, 3);
 			this.panelControlsMain.Name = "panelControlsMain";
-			this.panelControlsMain.Size = new System.Drawing.Size(757, 338);
+			this.panelControlsMain.Size = new System.Drawing.Size(632, 267);
 			this.panelControlsMain.TabIndex = 18;
 			// 
 			// btnMove
@@ -391,7 +393,7 @@
 			this.tabPageTuning.Controls.Add(this.panelControlsTuning);
 			this.tabPageTuning.Location = new System.Drawing.Point(4, 22);
 			this.tabPageTuning.Name = "tabPageTuning";
-			this.tabPageTuning.Size = new System.Drawing.Size(763, 344);
+			this.tabPageTuning.Size = new System.Drawing.Size(685, 303);
 			this.tabPageTuning.TabIndex = 2;
 			this.tabPageTuning.Text = "Tuning";
 			this.tabPageTuning.UseVisualStyleBackColor = true;
@@ -410,14 +412,14 @@
 			this.panelControlsTuning.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsTuning.Location = new System.Drawing.Point(0, 0);
 			this.panelControlsTuning.Name = "panelControlsTuning";
-			this.panelControlsTuning.Size = new System.Drawing.Size(763, 344);
+			this.panelControlsTuning.Size = new System.Drawing.Size(685, 303);
 			this.panelControlsTuning.TabIndex = 25;
 			// 
 			// numAvgAngleError
 			// 
 			this.numAvgAngleError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numAvgAngleError.DecimalPlaces = 2;
-			this.numAvgAngleError.Location = new System.Drawing.Point(679, 56);
+			this.numAvgAngleError.Location = new System.Drawing.Point(598, 101);
 			this.numAvgAngleError.Name = "numAvgAngleError";
 			this.numAvgAngleError.ReadOnly = true;
 			this.numAvgAngleError.Size = new System.Drawing.Size(54, 20);
@@ -427,7 +429,7 @@
 			// 
 			this.numMaxAngleError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numMaxAngleError.DecimalPlaces = 2;
-			this.numMaxAngleError.Location = new System.Drawing.Point(961, 36);
+			this.numMaxAngleError.Location = new System.Drawing.Point(598, 81);
 			this.numMaxAngleError.Name = "numMaxAngleError";
 			this.numMaxAngleError.ReadOnly = true;
 			this.numMaxAngleError.Size = new System.Drawing.Size(54, 20);
@@ -437,7 +439,7 @@
 			// 
 			this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(614, 58);
+			this.label14.Location = new System.Drawing.Point(533, 103);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(51, 13);
 			this.label14.TabIndex = 29;
@@ -447,7 +449,7 @@
 			// 
 			this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(614, 38);
+			this.label13.Location = new System.Drawing.Point(533, 83);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(52, 13);
 			this.label13.TabIndex = 30;
@@ -457,7 +459,7 @@
 			// 
 			this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(739, 87);
+			this.label12.Location = new System.Drawing.Point(658, 132);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(20, 13);
 			this.label12.TabIndex = 28;
@@ -471,7 +473,7 @@
             0,
             0,
             0});
-			this.numericUpDownStepInterval.Location = new System.Drawing.Point(695, 85);
+			this.numericUpDownStepInterval.Location = new System.Drawing.Point(614, 130);
 			this.numericUpDownStepInterval.Maximum = new decimal(new int[] {
             500,
             0,
@@ -494,19 +496,19 @@
 			// btnAutoTune
 			// 
 			this.btnAutoTune.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAutoTune.Location = new System.Drawing.Point(614, 82);
+			this.btnAutoTune.Location = new System.Drawing.Point(533, 127);
 			this.btnAutoTune.Name = "btnAutoTune";
 			this.btnAutoTune.Size = new System.Drawing.Size(75, 23);
 			this.btnAutoTune.TabIndex = 26;
 			this.btnAutoTune.Text = "Auto Tune";
 			this.btnAutoTune.UseVisualStyleBackColor = true;
-			this.btnAutoTune.Click += new System.EventHandler(this.btnAutoTune_Click);
+			this.btnAutoTune.Click += new System.EventHandler(this.BtnAutoTune_Click);
 			// 
 			// chkTuningEnable
 			// 
 			this.chkTuningEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkTuningEnable.AutoSize = true;
-			this.chkTuningEnable.Location = new System.Drawing.Point(614, 13);
+			this.chkTuningEnable.Location = new System.Drawing.Point(536, 14);
 			this.chkTuningEnable.Name = "chkTuningEnable";
 			this.chkTuningEnable.Size = new System.Drawing.Size(100, 17);
 			this.chkTuningEnable.TabIndex = 25;
@@ -514,12 +516,24 @@
 			this.chkTuningEnable.UseVisualStyleBackColor = true;
 			this.chkTuningEnable.CheckedChanged += new System.EventHandler(this.chkTuningEnable_CheckedChanged);
 			// 
+			// formsPlot1
+			// 
+			this.formsPlot1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.formsPlot1.BackColor = System.Drawing.Color.Transparent;
+			this.formsPlot1.Location = new System.Drawing.Point(3, 3);
+			this.formsPlot1.Name = "formsPlot1";
+			this.formsPlot1.Size = new System.Drawing.Size(527, 297);
+			this.formsPlot1.TabIndex = 24;
+			this.formsPlot1.YWarningLine = 0D;
+			// 
 			// tabPageFirmware
 			// 
 			this.tabPageFirmware.Controls.Add(this.panelControlsFirmware);
 			this.tabPageFirmware.Location = new System.Drawing.Point(4, 22);
 			this.tabPageFirmware.Name = "tabPageFirmware";
-			this.tabPageFirmware.Size = new System.Drawing.Size(763, 344);
+			this.tabPageFirmware.Size = new System.Drawing.Size(649, 284);
 			this.tabPageFirmware.TabIndex = 3;
 			this.tabPageFirmware.Text = "Firmware Upload";
 			this.tabPageFirmware.UseVisualStyleBackColor = true;
@@ -535,8 +549,30 @@
 			this.panelControlsFirmware.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsFirmware.Location = new System.Drawing.Point(0, 0);
 			this.panelControlsFirmware.Name = "panelControlsFirmware";
-			this.panelControlsFirmware.Size = new System.Drawing.Size(763, 344);
+			this.panelControlsFirmware.Size = new System.Drawing.Size(649, 284);
 			this.panelControlsFirmware.TabIndex = 23;
+			// 
+			// btnBootloaderRun
+			// 
+			this.btnBootloaderRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBootloaderRun.Location = new System.Drawing.Point(571, 81);
+			this.btnBootloaderRun.Name = "btnBootloaderRun";
+			this.btnBootloaderRun.Size = new System.Drawing.Size(74, 24);
+			this.btnBootloaderRun.TabIndex = 28;
+			this.btnBootloaderRun.Text = "Bootloader";
+			this.btnBootloaderRun.UseVisualStyleBackColor = true;
+			this.btnBootloaderRun.Click += new System.EventHandler(this.BtnBootloaderRun_Click);
+			// 
+			// progressBarDownloadProgress
+			// 
+			this.progressBarDownloadProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBarDownloadProgress.CustomText = null;
+			this.progressBarDownloadProgress.DisplayStyle = TrueStepTerminal.Controls.ProgressBarDisplayText.CustomText;
+			this.progressBarDownloadProgress.Location = new System.Drawing.Point(3, 25);
+			this.progressBarDownloadProgress.Name = "progressBarDownloadProgress";
+			this.progressBarDownloadProgress.Size = new System.Drawing.Size(562, 23);
+			this.progressBarDownloadProgress.TabIndex = 27;
 			// 
 			// rtfStm32Log
 			// 
@@ -546,14 +582,14 @@
 			this.rtfStm32Log.Location = new System.Drawing.Point(3, 54);
 			this.rtfStm32Log.Name = "rtfStm32Log";
 			this.rtfStm32Log.ReadOnly = true;
-			this.rtfStm32Log.Size = new System.Drawing.Size(676, 287);
+			this.rtfStm32Log.Size = new System.Drawing.Size(562, 227);
 			this.rtfStm32Log.TabIndex = 26;
 			this.rtfStm32Log.Text = "";
 			// 
 			// btnFirmwareDownload
 			// 
 			this.btnFirmwareDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareDownload.Location = new System.Drawing.Point(685, 54);
+			this.btnFirmwareDownload.Location = new System.Drawing.Point(571, 52);
 			this.btnFirmwareDownload.Name = "btnFirmwareDownload";
 			this.btnFirmwareDownload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareDownload.TabIndex = 22;
@@ -564,7 +600,7 @@
 			// btnFirmwareUpload
 			// 
 			this.btnFirmwareUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareUpload.Location = new System.Drawing.Point(685, 25);
+			this.btnFirmwareUpload.Location = new System.Drawing.Point(571, 25);
 			this.btnFirmwareUpload.Name = "btnFirmwareUpload";
 			this.btnFirmwareUpload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareUpload.TabIndex = 17;
@@ -588,7 +624,7 @@
 			this.tabPageExperimental.Location = new System.Drawing.Point(4, 22);
 			this.tabPageExperimental.Name = "tabPageExperimental";
 			this.tabPageExperimental.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageExperimental.Size = new System.Drawing.Size(763, 344);
+			this.tabPageExperimental.Size = new System.Drawing.Size(599, 250);
 			this.tabPageExperimental.TabIndex = 1;
 			this.tabPageExperimental.Text = "Experimental";
 			this.tabPageExperimental.UseVisualStyleBackColor = true;
@@ -607,7 +643,7 @@
 			this.panelControlsExperimental.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsExperimental.Location = new System.Drawing.Point(3, 3);
 			this.panelControlsExperimental.Name = "panelControlsExperimental";
-			this.panelControlsExperimental.Size = new System.Drawing.Size(757, 338);
+			this.panelControlsExperimental.Size = new System.Drawing.Size(593, 244);
 			this.panelControlsExperimental.TabIndex = 12;
 			// 
 			// label7
@@ -800,7 +836,7 @@
 			// btnClose
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClose.Location = new System.Drawing.Point(729, 632);
+			this.btnClose.Location = new System.Drawing.Point(648, 587);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(75, 23);
 			this.btnClose.TabIndex = 5;
@@ -819,46 +855,14 @@
 			this.panelMain.Controls.Add(this.grpParameters);
 			this.panelMain.Location = new System.Drawing.Point(12, 12);
 			this.panelMain.Name = "panelMain";
-			this.panelMain.Size = new System.Drawing.Size(792, 614);
+			this.panelMain.Size = new System.Drawing.Size(711, 569);
 			this.panelMain.TabIndex = 6;
-			// 
-			// btnBootloaderRun
-			// 
-			this.btnBootloaderRun.Location = new System.Drawing.Point(685, 83);
-			this.btnBootloaderRun.Name = "btnBootloaderRun";
-			this.btnBootloaderRun.Size = new System.Drawing.Size(74, 24);
-			this.btnBootloaderRun.TabIndex = 28;
-			this.btnBootloaderRun.Text = "Bootloader";
-			this.btnBootloaderRun.UseVisualStyleBackColor = true;
-			this.btnBootloaderRun.Click += new System.EventHandler(this.BtnBootloaderRun_Click);
-			// 
-			// formsPlot1
-			// 
-			this.formsPlot1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.formsPlot1.BackColor = System.Drawing.Color.Transparent;
-			this.formsPlot1.Location = new System.Drawing.Point(3, 3);
-			this.formsPlot1.Name = "formsPlot1";
-			this.formsPlot1.Size = new System.Drawing.Size(605, 338);
-			this.formsPlot1.TabIndex = 24;
-			// 
-			// progressBarDownloadProgress
-			// 
-			this.progressBarDownloadProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBarDownloadProgress.CustomText = null;
-			this.progressBarDownloadProgress.DisplayStyle = TrueStepTerminal.Controls.ProgressBarDisplayText.CustomText;
-			this.progressBarDownloadProgress.Location = new System.Drawing.Point(3, 25);
-			this.progressBarDownloadProgress.Name = "progressBarDownloadProgress";
-			this.progressBarDownloadProgress.Size = new System.Drawing.Size(676, 23);
-			this.progressBarDownloadProgress.TabIndex = 27;
 			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(816, 667);
+			this.ClientSize = new System.Drawing.Size(735, 622);
 			this.Controls.Add(this.panelMain);
 			this.Controls.Add(this.btnClose);
 			this.DoubleBuffered = true;
@@ -929,7 +933,7 @@
         private System.Windows.Forms.ToolTip toolTips;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnFirmwareDownload;
-		private FormsPlotMouseXTrack formsPlot1;
+		private FormsPlotMouseYTrack formsPlot1;
 		private System.Windows.Forms.Panel panelParameters;
 		private System.Windows.Forms.CheckBox chkWriteToFlash;
 		private System.Windows.Forms.Button btnWriteParameters;

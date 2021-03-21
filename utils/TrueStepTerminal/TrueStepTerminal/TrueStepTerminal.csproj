@@ -76,7 +76,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helper\ThrouputStream.cs" />
-    <Compile Include="FormsPlotMouseXTrack.cs">
+    <Compile Include="Controls\FormsPlotMouseYTrack.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Hardware\PidAutotuneCalc.cs" />

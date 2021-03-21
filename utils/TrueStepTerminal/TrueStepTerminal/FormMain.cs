@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using TrueStepTerminal.Controls;
 using TrueStepTerminal.Helper;
 
 namespace TrueStepTerminal
@@ -592,7 +593,7 @@ namespace TrueStepTerminal
 			}));
 		}
 
-		void ScottPlotInit(FormsPlot formsPlot, double[] angle, double[] angleError)
+		void ScottPlotInit(FormsPlotMouseYTrack formsPlot, double[] angle, double[] angleError)
 		{
 			//formsPlot.Configuration.MiddleClickAutoAxisMarginX = 0;
 
@@ -611,6 +612,7 @@ namespace TrueStepTerminal
 			formsPlot.Plot.AxisAutoX(margin: 0);
 			formsPlot.Plot.AxisAutoY(margin: 0);
 
+			formsPlot.YWarningLine = 0.5;
 			//formsPlot.Plot.SetAxisLimits(yMin: -3, yMax: 3);
 
 			//// plot a red vertical line and save it so we can move it later
