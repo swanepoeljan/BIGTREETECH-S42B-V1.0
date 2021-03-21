@@ -10,6 +10,7 @@ namespace TrueStepTerminal
 
 			public string Name => paramName;
 
+			[Browsable(false)]
 			public string ValueStr { get; set; }
 			public double Value
 			{

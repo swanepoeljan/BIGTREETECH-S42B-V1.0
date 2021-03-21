@@ -870,6 +870,9 @@ namespace TrueStepTerminal
 			byte[] msgJumpToBootloader = serialMessages.GeneratePacket(cmdJumpToBootloader.Serialize());
 			if (sPort.IsOpen)
 				sPort.Write(msgJumpToBootloader, 0, msgJumpToBootloader.Length);
+
+			BtnConnect_Click(sender, e);
+			MessageBox.Show("Now you device in a bootloader mode", "Bootloader");
 		}
 	}
 }
