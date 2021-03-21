@@ -42,7 +42,7 @@ namespace TrueStepTerminal
 			{
 				// Load failed, use default settings
 				AppSettings.Connection.Port = "COM1";
-				AppSettings.Connection.Baud = 38400;
+				AppSettings.Connection.Baud = 115200;
 				return false;
 			}
 
