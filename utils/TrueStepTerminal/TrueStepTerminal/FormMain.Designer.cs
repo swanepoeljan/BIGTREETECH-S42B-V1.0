@@ -96,6 +96,7 @@ namespace TrueStepTerminal
 			this.btnClose = new System.Windows.Forms.Button();
 			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
 			this.panelMain = new System.Windows.Forms.Panel();
+			this.btnAbout = new System.Windows.Forms.Button();
 			this.grpParameters.SuspendLayout();
 			this.panelParameters.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewParameters)).BeginInit();
@@ -294,7 +295,7 @@ namespace TrueStepTerminal
 			this.tabPageMain.Location = new System.Drawing.Point(4, 22);
 			this.tabPageMain.Name = "tabPageMain";
 			this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageMain.Size = new System.Drawing.Size(638, 273);
+			this.tabPageMain.Size = new System.Drawing.Size(685, 303);
 			this.tabPageMain.TabIndex = 0;
 			this.tabPageMain.Text = "Main";
 			this.tabPageMain.UseVisualStyleBackColor = true;
@@ -309,7 +310,7 @@ namespace TrueStepTerminal
 			this.panelControlsMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsMain.Location = new System.Drawing.Point(3, 3);
 			this.panelControlsMain.Name = "panelControlsMain";
-			this.panelControlsMain.Size = new System.Drawing.Size(632, 267);
+			this.panelControlsMain.Size = new System.Drawing.Size(679, 297);
 			this.panelControlsMain.TabIndex = 18;
 			// 
 			// btnMove
@@ -533,7 +534,7 @@ namespace TrueStepTerminal
 			this.tabPageFirmware.Controls.Add(this.panelControlsFirmware);
 			this.tabPageFirmware.Location = new System.Drawing.Point(4, 22);
 			this.tabPageFirmware.Name = "tabPageFirmware";
-			this.tabPageFirmware.Size = new System.Drawing.Size(649, 284);
+			this.tabPageFirmware.Size = new System.Drawing.Size(685, 303);
 			this.tabPageFirmware.TabIndex = 3;
 			this.tabPageFirmware.Text = "Firmware Upload";
 			this.tabPageFirmware.UseVisualStyleBackColor = true;
@@ -549,13 +550,13 @@ namespace TrueStepTerminal
 			this.panelControlsFirmware.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsFirmware.Location = new System.Drawing.Point(0, 0);
 			this.panelControlsFirmware.Name = "panelControlsFirmware";
-			this.panelControlsFirmware.Size = new System.Drawing.Size(649, 284);
+			this.panelControlsFirmware.Size = new System.Drawing.Size(685, 303);
 			this.panelControlsFirmware.TabIndex = 23;
 			// 
 			// btnBootloaderRun
 			// 
 			this.btnBootloaderRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBootloaderRun.Location = new System.Drawing.Point(571, 81);
+			this.btnBootloaderRun.Location = new System.Drawing.Point(607, 81);
 			this.btnBootloaderRun.Name = "btnBootloaderRun";
 			this.btnBootloaderRun.Size = new System.Drawing.Size(74, 24);
 			this.btnBootloaderRun.TabIndex = 28;
@@ -571,7 +572,7 @@ namespace TrueStepTerminal
 			this.progressBarDownloadProgress.DisplayStyle = TrueStepTerminal.Controls.ProgressBarDisplayText.CustomText;
 			this.progressBarDownloadProgress.Location = new System.Drawing.Point(3, 25);
 			this.progressBarDownloadProgress.Name = "progressBarDownloadProgress";
-			this.progressBarDownloadProgress.Size = new System.Drawing.Size(562, 23);
+			this.progressBarDownloadProgress.Size = new System.Drawing.Size(598, 23);
 			this.progressBarDownloadProgress.TabIndex = 27;
 			// 
 			// rtfStm32Log
@@ -582,14 +583,14 @@ namespace TrueStepTerminal
 			this.rtfStm32Log.Location = new System.Drawing.Point(3, 54);
 			this.rtfStm32Log.Name = "rtfStm32Log";
 			this.rtfStm32Log.ReadOnly = true;
-			this.rtfStm32Log.Size = new System.Drawing.Size(562, 227);
+			this.rtfStm32Log.Size = new System.Drawing.Size(598, 246);
 			this.rtfStm32Log.TabIndex = 26;
 			this.rtfStm32Log.Text = "";
 			// 
 			// btnFirmwareDownload
 			// 
 			this.btnFirmwareDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareDownload.Location = new System.Drawing.Point(571, 52);
+			this.btnFirmwareDownload.Location = new System.Drawing.Point(607, 52);
 			this.btnFirmwareDownload.Name = "btnFirmwareDownload";
 			this.btnFirmwareDownload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareDownload.TabIndex = 22;
@@ -600,7 +601,7 @@ namespace TrueStepTerminal
 			// btnFirmwareUpload
 			// 
 			this.btnFirmwareUpload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFirmwareUpload.Location = new System.Drawing.Point(571, 25);
+			this.btnFirmwareUpload.Location = new System.Drawing.Point(607, 25);
 			this.btnFirmwareUpload.Name = "btnFirmwareUpload";
 			this.btnFirmwareUpload.Size = new System.Drawing.Size(75, 23);
 			this.btnFirmwareUpload.TabIndex = 17;
@@ -624,7 +625,7 @@ namespace TrueStepTerminal
 			this.tabPageExperimental.Location = new System.Drawing.Point(4, 22);
 			this.tabPageExperimental.Name = "tabPageExperimental";
 			this.tabPageExperimental.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageExperimental.Size = new System.Drawing.Size(599, 250);
+			this.tabPageExperimental.Size = new System.Drawing.Size(685, 303);
 			this.tabPageExperimental.TabIndex = 1;
 			this.tabPageExperimental.Text = "Experimental";
 			this.tabPageExperimental.UseVisualStyleBackColor = true;
@@ -643,7 +644,7 @@ namespace TrueStepTerminal
 			this.panelControlsExperimental.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelControlsExperimental.Location = new System.Drawing.Point(3, 3);
 			this.panelControlsExperimental.Name = "panelControlsExperimental";
-			this.panelControlsExperimental.Size = new System.Drawing.Size(593, 244);
+			this.panelControlsExperimental.Size = new System.Drawing.Size(679, 297);
 			this.panelControlsExperimental.TabIndex = 12;
 			// 
 			// label7
@@ -858,11 +859,22 @@ namespace TrueStepTerminal
 			this.panelMain.Size = new System.Drawing.Size(711, 569);
 			this.panelMain.TabIndex = 6;
 			// 
+			// btnAbout
+			// 
+			this.btnAbout.Location = new System.Drawing.Point(11, 587);
+			this.btnAbout.Name = "btnAbout";
+			this.btnAbout.Size = new System.Drawing.Size(75, 23);
+			this.btnAbout.TabIndex = 7;
+			this.btnAbout.Text = "About";
+			this.btnAbout.UseVisualStyleBackColor = true;
+			this.btnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(735, 622);
+			this.Controls.Add(this.btnAbout);
 			this.Controls.Add(this.panelMain);
 			this.Controls.Add(this.btnClose);
 			this.DoubleBuffered = true;
@@ -971,6 +983,7 @@ namespace TrueStepTerminal
 		private Controls.CustomProgressBar progressBarDownloadProgress;
 		private System.Windows.Forms.Button btnBootloaderRun;
 		private System.Windows.Forms.GroupBox grpControls;
+		private System.Windows.Forms.Button btnAbout;
 	}
 }
 

@@ -1,5 +1,4 @@
-﻿using ScottPlot;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
@@ -28,6 +27,7 @@ namespace TrueStepTerminal
 		public FormMain()
 		{
 			InitializeComponent();
+			Text = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}";
 
 			pidAutotuneClass = new PidAutotuneCalc(2000);
 			ScottPlotInit(formsPlot1, pidAutotuneClass.AngleDouble, pidAutotuneClass.AngleErrorDouble);
@@ -870,6 +870,12 @@ namespace TrueStepTerminal
 
 			BtnConnect_Click(sender, e);
 			MessageBox.Show("Now you device in a bootloader mode", "Bootloader");
+		}
+
+		private void BtnAbout_Click(object sender, EventArgs e)
+		{
+			var frmAbout = new AboutBox();
+			frmAbout.ShowDialog();
 		}
 	}
 }
