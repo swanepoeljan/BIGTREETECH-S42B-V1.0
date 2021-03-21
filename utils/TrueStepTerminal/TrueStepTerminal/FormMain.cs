@@ -20,7 +20,6 @@ namespace TrueStepTerminal
 		Settings AppSettings = new Settings();
 		SerialPort sPort;
 		SerialProtocolBase serialMessages;
-		Byte[] buffer = new byte[100];
 		private System.Threading.Timer timerRenderScottPlot;
 		Parameters driverParameters;
 
@@ -640,7 +639,7 @@ namespace TrueStepTerminal
 			//plt.SaveFig("Quickstart_Quickstart_Signal_5MillionPoints.png");
 		}
 
-		private void btnAutoTune_Click(object sender, EventArgs e)
+		private void BtnAutoTune_Click(object sender, EventArgs e)
 		{
 			if (serialMessages == null) return;
 
@@ -845,7 +844,6 @@ namespace TrueStepTerminal
 			}
 		}
 
-
 		private void ChkBTTProtocol_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chkBTTProtocol.Checked)
@@ -863,7 +861,6 @@ namespace TrueStepTerminal
 				chkWriteToFlash.Enabled = true;
 			}
 		}
-
 		private void BtnBootloaderRun_Click(object sender, EventArgs e)
 		{
 			Messages.Msg_Command cmdJumpToBootloader = new Messages.Msg_Command { command = Messages.COMMAND_TYPES.JUMP_BOOTLOADER };
