@@ -14,8 +14,8 @@
         "0x0004"
       ]
     ],
-    "ldscript": "STM32F030C8_FLASH.ld",
     "mcu": "stm32f030c8t6",
+    "product_line": "stm32f030x8",
     "variant": "stm32f0"
   },
   "debug": {
@@ -27,6 +27,7 @@
     "arduino",
     "libopencm3",
     "stm32cube",
+    "stm32cubef0",
     "cmsis"
   ],
   "name": "STM32F030C8 (8k RAM. 64k Flash)",
